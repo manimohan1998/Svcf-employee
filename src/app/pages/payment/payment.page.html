@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar class="payment">
+    <!-- <div class="flex">
+      <ion-icon name="arrow-round-back" class="arrow" (click)="previous()"></ion-icon>
+      <ion-label class="logout" (click)="logout()">
+        <ion-icon name="exit" class="exit"></ion-icon>
+        Logout
+      </ion-label>
+    </div> -->
+    <div class="flex_arrow">
+      <ion-icon name="arrow-back-outline" class="arrow" (click)="previous()"></ion-icon>
+      <div class="icon_tool">
+        <ion-label (click)="logout()">
+          <ion-icon name="exit" class="exit"></ion-icon>
+          <span class="text1">Logout</span>
+        </ion-label>
+      </div>
+    </div>
+    <div class="payeename">
+      <ion-label class="payee_name">{{user_details?.MemberName}}</ion-label>
+    </div>
+    <p class="today_date">{{today | date: 'dd/MM/yyyy'}}</p>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="flex-page">
+    <p class="payee_no">No. of chits</p>
+    <p class="data-no">{{user_details?.chitcount}}</p>
+  </div>
+  <ion-card *ngFor="let value of newarr">
+    <ion-card-header>
+      <ion-card-title class="title">
+        <ion-avatar>
+          <img src="{{imageUrl}}{{value?.url}}" onError="this.src='assets/images/user.jpg'">
+        </ion-avatar>
+        <span [ngStyle]="{'color':value?.status === 'R' ? 'green':'red'}">{{value?.status}}</span><br>
+        <span>{{ value?.groupno }}</span>
+        <span class="pipe">|</span>
+        <span class="pipe">AGT NO:{{value?.agreementno}}</span>
+        <span style="float:right;" [ngStyle]="{'color':value?.isprized === 'Prized' ? 'green':'red'}">{{value?.isprized}}</span>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+            <p class="value">Total Chit Value: Rs {{value?.totalchitvalue}}</p>
+      <p *ngIf="value?.NonPrizedArrear != 0">Non-Prized Arrear :<span>{{value?.NonPrizedArrear}}</span></p>
+      <p *ngIf="value?.PrizedArrear != 0">Prized Arrear:<span>{{value?.PrizedArrear}}</span></p>
+
+      <p>Current Inst.No:<span>{{value?.instno}}</span></p>
+            <p>Current Due Amount:<span>{{value?.CurrentDueAmount}}</span></p>
+
+      <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)" ></ion-checkbox>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="length1 === 0">
+    <ion-img class="no" src="assets/images/nodata.jpeg"></ion-img>
+  </ion-card>
+  <p style="margin-left:10px;">Mode of payment</p>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <ion-icon name="cash" class="icon"></ion-icon>
+        <span class="text">Cash Payment</span>
+      </ion-label>
+      <ion-icon name="arrow-forward" (click)="cash()"></ion-icon>
+    </ion-item>
+   </ion-list>
+</ion-content>

@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar class="cash">
+        <div class="flex_arrow">
+            <ion-icon name="arrow-back-outline" class="arrow" (click)="previous()"></ion-icon>
+            <div class="icon_tool">
+                <ion-label (click)="logout()">
+                    <ion-icon name="exit" class="exit"></ion-icon>
+                    <span class="text1">Logout</span>
+                </ion-label>
+            </div>
+        </div>
+        <div class="payeename">
+            <ion-label class="payee_name">{{i_details[0].Membername}}</ion-label>
+        </div>
+        <p class="today_date">{{today | date:'dd/MM/yyyy'}}</p>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="cash-content">
+    <form [formGroup]="cashForm" novalidate>
+        <div [formArrayName]="'formArrayName'">
+            <div *ngFor="let n of i_details; let i = index">
+                <div [formGroupName]="i">
+                    <div class="align">
+                                                <input type="text" formControlName="branchname" readonly style="border:0;padding-left:15px;">
+
+                        <input type="text" formControlName="groupno" readonly style="border:0;padding-left:15px;">
+                        <p style="white-space: nowrap; font-size:14px;">Total Chit Value:&nbsp;</p>
+                        <input type="text" formControlName="totalchit" readonly style="border:0">
+                        <input type="text" formControlName="branchid" readonly style="display:none">
+                        <input type="text" formControlName="memberid" readonly style="display: none">
+                        <input type="text" formControlName="m_id" readonly style="display:none">
+                        <input type="text" formControlName="rootid" readonly style="display:none">
+                        <input type="text" formControlName="headid" readonly style="display:none">
+                        <input type="text" formControlName="chitgroupid" readonly style="display:none">
+                        <input type="text" formControlName="installment" readonly style="display:none">
+                        <input type="text" formControlName="agreement" readonly style="display:none">
+                    </div>
+                    <mat-form-field>
+                        <input matInput placeholder="Amount Received" formControlName="amountreceived" required>
+                        <mat-error>Enter a valid amount</mat-error>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="n?.isprized == 'Prized'">
+                        <input matInput placeholder="Prized Arrear" formControlName="prizedarrear" required>
+                        <mat-error>Enter a valid amount</mat-error>
+                    </mat-form-field>
+                     <mat-form-field *ngIf="n?.isprized == 'Non-Prized'">
+                        <input matInput placeholder="Non-Prized Arrear" formControlName="nonprizedarrear" required>
+                        <mat-error>Enter a valid amount</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Interest " formControlName="interest">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Other Amount" formControlName="otheramount">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Write Narrations" formControlName="narration" required>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="submit(cashForm.value)">
+        <ion-fab-button [disabled]="!cashForm.valid">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <!-- <button  type="submit" (click)="submit(cashForm.value)">go</button> -->
+</ion-content>

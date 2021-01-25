@@ -1,0 +1,7 @@
+{
+  "name": "SVCFBILLCOLLECTORAPP",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

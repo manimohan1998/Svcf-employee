@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar class="print">
+    <!-- <div class="flex">
+            <ion-icon name="arrow-round-back" class="arrow" (click)="previous()"></ion-icon>
+            <ion-label class="logout" (click)="logout()">
+              <ion-icon name="exit" class="exit"></ion-icon>
+              Logout
+            </ion-label>
+          </div> -->
+    <div class="flex_arrow">
+      <ion-icon name="arrow-back-outline" class="arrow" (click)="previous()"></ion-icon>
+      <div class="icon_tool">
+        <ion-label (click)="logout()">
+          <ion-icon name="exit" class="exit"></ion-icon>
+          <span class="text1">Logout</span>
+        </ion-label>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+      <div class="printable-area" id="printable-area">
+
+  <div class="print_branch">
+
+    <ion-label style="padding-right:12px;padding-top:20px;color:black;">Form XV1</ion-label>
+  </div>
+  <div class="image">
+    <img src="assets/images/logo.jpg">
+  </div>
+  <div class="sv">
+    <p class="sv_p">SREE VISALAM CHIT FUND LTD.</p>
+    <p class="regd">Regd Office: Tirunelveli -6</p>
+    <p class="regd">(See Section 23 and Rule 25)</p>
+    <p class="regd">Receipt issued under the chit funds Act 1982</p>
+  </div>
+  <div *ngFor="let p of print_cash_page">
+  <div class="branch_name">
+  <p>Branch Name:<span>{{p.branchName}}</span></p>
+  </div>
+  
+    
+      <div class="receipt_date">
+       <p> Date/Time: <span>{{p.datetime |date:'dd-MM-yyyy HH:mm'}}</span></p>
+      <p> Receipt No: <span>{{p.cashReceiptNo}} </span></p>
+      </div>
+    
+    <div class="receipt">
+    <p> Chit No:<span>{{p.chitNo}}</span></p>
+<!--     <p>Agreement No: <span>{{p.agreementNo}}</span></p>
+    <p>Current Inst No:<span>{{p.currentInstalmentNo}}</span></p>
+       <p>Penalty for overdue:<span>Rs  {{p.penaltyForOverdue}}</span></p>
+
+       <p>Other Receipts:<span>Rs  ..........</span></p>
+ -->    <p> Amount:<span>{{p.amount}}</span></p>
+      <p> Interest:<span>{{p.penaltyForOverdue}}</span></p>
+      <p> Total:<span>{{p.total}}</span></p>
+
+    <p>Bill Collector Name:<span>{{p.billCollectorName}}</span></p>
+    </div>
+  
+  </div>
+  <p class="sig">This is a computer generated Receipt hence signature<br> is not required</p>
+  <div class="buttons">
+        <ion-button class="print" (click)="generate()">Generate Receipt</ion-button>
+
+    <ion-button class="print" (click)="share_email()">Share</ion-button>
+
+  </div>
+</div>
+</ion-content>
+
+
+

@@ -1,0 +1,251 @@
+.flex_arrow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.logout{
+    padding-top: 2rem;
+    padding-right: 2rem;
+    color: #fff;
+}
+
+.arrow{
+    margin-top: 1rem;
+    margin-left: 2rem;
+    background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
+;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 30px;
+}
+.payment{
+    --background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
+}
+.payee_name{
+  color:#fff;
+  font-weight: bold;
+  margin-left: 12px;
+}
+.today_date{
+    color:#fff;
+    margin-left: 12px;
+
+}
+.flex-page{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .payee_no{
+        margin-left: 12px;
+    }
+    .data-no{
+        margin-right: 1rem;
+        color:#5E5CA5;
+        font-weight: bold;
+    }
+}
+.left{
+    border-right: 1px #F05940 solid;
+
+}
+// p {
+//     overflow: hidden;
+// }
+
+// p span {
+//     margin: -1px 1px 1px -1px;
+//     line-height: 2em;
+//     border-top: 1px solid blue;
+//     border-left: 1px solid green;
+//     padding: 0.4em;
+//     float: left;
+// }
+.title{
+    span{
+        font-size:12px;
+        font-weight: 600;
+    }
+    .pipe{
+        margin-left: 12px;
+    }
+}
+ion-card{
+    background-color:#F6F6FA;
+}
+.value{
+    color:#272727;
+}
+ion-checkbox{
+    float:right;
+}
+ion-card-content{
+    p span{
+        margin-left: 15px;
+
+    }
+}
+.mode{
+    margin-left: 12px;
+   
+}
+.text{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+  }
+  .icon {
+    display: inline-block;
+    font-size: 22px;
+    color: #6765AA;
+    vertical-align: middle;
+   }
+   .cash-content{
+    p{
+        padding-left: 15px;
+    }
+    .mat-form-field {
+		display: block;
+		font-size: 14px;
+		margin: 5px 15px;
+	}
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.logout{
+    padding-top: 2rem;
+    padding-right: 2rem;
+    color: #fff;
+}
+.cash{
+    --background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
+}
+.exit{
+    color: #fff;
+    display: inline-block;
+    font-size: 22px;
+    vertical-align: middle;
+
+
+}
+.arrow{
+    margin-top: 1rem;
+    margin-left: 2rem;
+    background: #37348B;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 30px;
+}
+.today_date{
+    color:#fff;
+    margin-left: 12px;
+
+}
+.total-chit{
+padding-right: 12px;
+}
+.align{
+display: flex;
+justify-content: space-between;
+}
+
+//cashpay
+
+// ion-input{
+//     text-align: right;
+// }
+.next{
+    margin-left: 15px;
+    width:92%;
+    margin-top: 2rem;
+    height:40px;
+    border-radius:40px;
+    background: #413E95;
+    color:white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.total-chit{
+    padding-right: 12px;
+    }
+.align{
+    display: flex;
+    justify-content: space-between;
+    p{
+        margin-left: -42px;
+    }
+    }
+    .flex{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logout{
+        padding-top: 2rem;
+        padding-right: 2rem;
+        color: #fff;
+    }
+    
+    .arrow{
+        margin-top: 1rem;
+        margin-left: 2rem;
+        background: #37348B;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 30px;
+    }
+    .today_date{
+        color:#fff;
+        margin-left: 12px;
+    
+    }
+    .cash{
+    --background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
+    }
+    .bottom_icon{
+        position: fixed;
+        left: 85%;
+        bottom: 2px;
+        border-radius:50%;
+        font-size: 28px;
+        background: #37348B;
+        padding:5px;
+        color:white;
+    }
+    .text1{
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 10px;
+        color: white;
+    }
+    .icon_tool{
+       padding-top: 1rem;
+       padding-right: 1rem;
+    }
+    .payeename{
+      margin-top: 1rem;
+    }
+    .bank{
+        padding-left: 8px;
+        font-weight: bold;
+    }
+    .amt{
+        font-weight: bold;
+        color: black;
+    }
+    ion-spinner  {
+    stroke: #ff0000;
+    fill: #8b0000;
+    position: fixed;
+    z-index: 999;
+    height: 5em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
