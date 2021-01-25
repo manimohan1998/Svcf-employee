@@ -1,28 +1,135 @@
-<ion-header>
-  <ion-toolbar class="payment">
-    <!-- <div class="flex">
-      <ion-icon name="arrow-round-back" class="arrow" (click)="previous()"></ion-icon>
-      <ion-label class="logout" (click)="logout()">
-        <ion-icon name="exit" class="exit"></ion-icon>
-        Logout
-      </ion-label>
-    </div> -->
-    <div class="flex_arrow">
-      <ion-icon name="arrow-back-outline" class="arrow" (click)="previous()"></ion-icon>
-      <div class="icon_tool">
-        <ion-label (click)="logout()">
-          <ion-icon name="exit" class="exit"></ion-icon>
-          <span class="text1">Logout</span>
-        </ion-label>
-      </div>
-    </div>
-    <div class="payeename">
-      <ion-label class="payee_name">{{user_details?.MemberName}}</ion-label>
-    </div>
-    <p class="today_date">{{today | date: 'dd/MM/yyyy'}}</p>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="svcf_dashboard_page">
 
+  <section class="customer_details">
+    <ion-row size="12">
+      <ion-col class="customer_name" size="9" size="9">
+        <h2 size="8">{{user_details?.MemberName}}</h2>
+        <h5 size="8">{{today | date: 'dd/MM/yyyy'}}</h5>
+      </ion-col>
+      <ion-col class="profile_img" size="2">
+        <ion-avatar><span>
+            <img src="../../../assets/images/user.jpg">
+          </span></ion-avatar>
+
+      </ion-col>
+      <ion-col class="menu" size="1">
+        <ion-icon name="ellipsis-vertical-outline" (click)="logout()"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <div class="search">
+      <ion-searchbar placeholder="search" [(ngModel)]="terms"></ion-searchbar>
+    </div>
+
+    <p *ngIf="chit_length !=0" class="total_chits">No. of Chits : <span>{{user_details?.chitcount}}</span></p>
+  </section>
+
+  <ion-card class="card_bg" *ngFor="let value of newarr">
+    <div class="chits_item_details">
+      <ion-avatar class="mr-1">
+        <img src="{{imageUrl}}{{value?.url}}" onError="this.src='assets/images/user.jpg'">
+      </ion-avatar>
+
+      <table class="table chit_details">
+        <tbody>
+          <tr>
+            <th>Value</th>
+            <td>
+              <p>:</p>
+            </td>
+            <td>
+              {{ value?.groupno }}
+            </td>
+          </tr>
+          <tr>
+            <th>Agt No</th>
+            <td>
+              <p>:</p>
+            </td>
+            <td>
+              {{value?.agreementno}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="branch_name">{{val.BranchName}}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Chit No</th>
+            <td>
+              <p>:</p>
+            </td>
+            <td>
+              <span>{{val.ChitNo}}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Current inst no</th>
+            <td>
+              <p>:</p>
+            </td>
+            <td>
+              <span>{{value?.instno}}</span>
+            </td>
+          </tr>
+
+
+          <tr>
+            <th>Arrear Amount</th>
+            <td>
+              <p>:</p>
+            </td>
+            <td>
+              <p *ngIf="value?.NonPrizedArrear != 0"> <span>{{value?.NonPrizedArrear}}</span></p>
+              <p *ngIf="value?.PrizedArrear != 0"><span>{{value?.PrizedArrear}}</span></p>
+            </td>
+          </tr>
+
+
+          <tr>
+            <th>Interest Amount</th>
+            <td>
+              <p>:</p>
+            </td>
+            <td>
+              <span>0.00</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chit_status" [ngClass]="val.IsPrized === 'Y'?'green':'red'">
+      <p>{{val.IsPrized === 'Y'?'Prized':'Non-Prized'}}</p>
+    </div>
+    <div class="bottom_sec">
+      <p size="6">current Due : <span>{{value?.CurrentDueAmount}}</span></p>
+      <p size="6">Total paid : <span>{{value?.totalchitvalue}}</span></p>
+    </div>
+  </ion-card>
+  <ion-card *ngIf="length1 === 0">
+    <ion-img class="no" src="assets/images/nodata.jpeg"></ion-img>
+  </ion-card>
+  <section class="p-24">
+    <p style="margin-left:10px;">Mode of payment</p>
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="cash" class="icon"></ion-icon>
+          <span class="text">Cash Payment</span>
+        </ion-label>
+        <ion-icon name="arrow-forward" (click)="cash()"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </section>
+</ion-content>
+
+<!-- old code  -->
+
+<!-- 
 <ion-content>
   <div class="flex-page">
     <p class="payee_no">No. of chits</p>
@@ -38,18 +145,19 @@
         <span>{{ value?.groupno }}</span>
         <span class="pipe">|</span>
         <span class="pipe">AGT NO:{{value?.agreementno}}</span>
-        <span style="float:right;" [ngStyle]="{'color':value?.isprized === 'Prized' ? 'green':'red'}">{{value?.isprized}}</span>
+        <span style="float:right;"
+          [ngStyle]="{'color':value?.isprized === 'Prized' ? 'green':'red'}">{{value?.isprized}}</span>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-            <p class="value">Total Chit Value: Rs {{value?.totalchitvalue}}</p>
+      <p class="value">Total Chit Value: Rs {{value?.totalchitvalue}}</p>
       <p *ngIf="value?.NonPrizedArrear != 0">Non-Prized Arrear :<span>{{value?.NonPrizedArrear}}</span></p>
       <p *ngIf="value?.PrizedArrear != 0">Prized Arrear:<span>{{value?.PrizedArrear}}</span></p>
 
       <p>Current Inst.No:<span>{{value?.instno}}</span></p>
-            <p>Current Due Amount:<span>{{value?.CurrentDueAmount}}</span></p>
+      <p>Current Due Amount:<span>{{value?.CurrentDueAmount}}</span></p>
 
-      <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)" ></ion-checkbox>
+      <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)"></ion-checkbox>
     </ion-card-content>
   </ion-card>
   <ion-card *ngIf="length1 === 0">
@@ -64,5 +172,5 @@
       </ion-label>
       <ion-icon name="arrow-forward" (click)="cash()"></ion-icon>
     </ion-item>
-   </ion-list>
-</ion-content>
+  </ion-list>
+</ion-content> -->

@@ -3,9 +3,8 @@
     color:#9898A3;
 }
 ion-img{
-    width:80px;
-    margin-left: 12px;
-    margin-top: 15px;
+    height: 80px;
+    width: 80px;
     }
     .flex{
         display: flex;
@@ -34,9 +33,11 @@ ion-img{
     background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
     }
     .login-name{
-        float: right;
-        padding-right: 15px;
-        color:white;
+        font-size: 16px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+margin-bottom: 0;
     }
 ion-spinner  {
     stroke: #ff0000;
