@@ -1,70 +1,144 @@
-<ion-header>
-    <ion-toolbar class="cash">
-        <div class="flex_arrow">
-            <ion-icon name="arrow-back-outline" class="arrow" (click)="previous()"></ion-icon>
-            <div class="icon_tool">
-                <ion-label (click)="logout()">
-                    <ion-icon name="exit" class="exit"></ion-icon>
-                    <span class="text1">Logout</span>
-                </ion-label>
-            </div>
-        </div>
-        <div class="payeename">
-            <ion-label class="payee_name">{{i_details[0].Membername}}</ion-label>
-        </div>
-        <p class="today_date">{{today | date:'dd/MM/yyyy'}}</p>
-    </ion-toolbar>
-</ion-header>
+<ion-content class="svcf_dashboard_page svcf_payment_page">
 
-<ion-content class="cash-content">
-    <form [formGroup]="cashForm" novalidate>
-        <div [formArrayName]="'formArrayName'">
-            <div *ngFor="let n of i_details; let i = index">
-                <div [formGroupName]="i">
-                    <div class="align">
-                                                <input type="text" formControlName="branchname" readonly style="border:0;padding-left:15px;">
+    <section class="customer_details">
+        <ion-row size="12">
+            <ion-col class="customer_name" size="11">
+                <h2 size="8">{{i_details[0].Membername}}</h2>
+                <h5 size="8">{{today | date:'dd/MM/yyyy'}}</h5>
+            </ion-col>
+            <ion-col class="menu" size="1">
+                <ion-icon name="ellipsis-vertical-outline" (click)="logout()"></ion-icon>
+            </ion-col>
+        </ion-row>
+    </section>
+    <div class="payment card_bg space_padding">
+        <div class="page_title">
+            <h3>Chits Details</h3>
+            <ion-icon name="create-outline" slot="end"></ion-icon>
+          </div>
+        <form [formGroup]="cashForm" novalidate>
+            <div [formArrayName]="'formArrayName'" class="payment_form">
+                <div *ngFor="let n of i_details; let i = index">
+                    <div [formGroupName]="i">
 
-                        <input type="text" formControlName="groupno" readonly style="border:0;padding-left:15px;">
-                        <p style="white-space: nowrap; font-size:14px;">Total Chit Value:&nbsp;</p>
-                        <input type="text" formControlName="totalchit" readonly style="border:0">
-                        <input type="text" formControlName="branchid" readonly style="display:none">
-                        <input type="text" formControlName="memberid" readonly style="display: none">
-                        <input type="text" formControlName="m_id" readonly style="display:none">
-                        <input type="text" formControlName="rootid" readonly style="display:none">
-                        <input type="text" formControlName="headid" readonly style="display:none">
-                        <input type="text" formControlName="chitgroupid" readonly style="display:none">
-                        <input type="text" formControlName="installment" readonly style="display:none">
-                        <input type="text" formControlName="agreement" readonly style="display:none">
-                    </div>
-                    <mat-form-field>
-                        <input matInput placeholder="Amount Received" formControlName="amountreceived" required>
-                        <mat-error>Enter a valid amount</mat-error>
-                    </mat-form-field>
-                    <mat-form-field *ngIf="n?.isprized == 'Prized'">
-                        <input matInput placeholder="Prized Arrear" formControlName="prizedarrear" required>
-                        <mat-error>Enter a valid amount</mat-error>
-                    </mat-form-field>
-                     <mat-form-field *ngIf="n?.isprized == 'Non-Prized'">
-                        <input matInput placeholder="Non-Prized Arrear" formControlName="nonprizedarrear" required>
-                        <mat-error>Enter a valid amount</mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Interest " formControlName="interest">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Other Amount" formControlName="otheramount">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Write Narrations" formControlName="narration" required>
-                    </mat-form-field>
+                        <!-- <div class="form-group">
+                            <label>
+                                Branch Name:
+                            </label>
+
+                            <input type="text" formControlName="branchname" readonly
+                                style="border:0;padding-left:15px;">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Chit ID:
+                            </label>
+
+                            <input type="text" formControlName="groupno" readonly style="border:0;padding-left:15px;">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Total Chit Value:
+                            </label>
+                            <input type="text" formControlName="totalchit" readonly style="border:0">
+
+                        </div>
+                        <div>
+                            <input type="text" formControlName="branchid" readonly style="display:none">
+                            <input type="text" formControlName="memberid" readonly style="display: none">
+                            <input type="text" formControlName="m_id" readonly style="display:none">
+                            <input type="text" formControlName="rootid" readonly style="display:none">
+                            <input type="text" formControlName="headid" readonly style="display:none">
+                            <input type="text" formControlName="chitgroupid" readonly style="display:none">
+                            <input type="text" formControlName="installment" readonly style="display:none">
+                            <input type="text" formControlName="agreement" readonly style="display:none">
+                        </div>
+                        <mat-form-field>
+                            <input matInput placeholder="Amount Received" formControlName="amountreceived" required>
+                            <mat-error>Enter a valid amount</mat-error>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="n?.isprized == 'Prized'">
+                            <input matInput placeholder="Prized Arrear" formControlName="prizedarrear" required>
+                            <mat-error>Enter a valid amount</mat-error>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="n?.isprized == 'Non-Prized'">
+                            <input matInput placeholder="Non-Prized Arrear" formControlName="nonprizedarrear" required>
+                            <mat-error>Enter a valid amount</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Interest " formControlName="interest">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Other Amount" formControlName="otheramount">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Write Narrations" formControlName="narration" required>
+                        </mat-form-field>
+                    </div> -->
+                
+                    <ion-card>
+                        <ion-card-header>
+                            <p>Total Chit Value:<span>40000</span></p>
+                            <p class="chit_no">IC4786</p>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <ion-item>
+                                <ion-label position="stacked">Amount Received</ion-label>
+                                <ion-input formControlName="amountreceived" type="number" value=""
+                                    placeholder="Amount Received">
+                                </ion-input>
+                            </ion-item>
+                            <ion-item *ngIf="n?.isprized == 'Prized'">
+                                <ion-label position="stacked">Arrear Amount</ion-label>
+                                <ion-input formControlName="prizedarrear" type="number" value=""
+                                    placeholder="Prized Arrear" required>
+                                </ion-input>
+                            </ion-item>
+
+                            <ion-item *ngIf="n?.isprized == 'Non-Prized'">
+                                <ion-label position="stacked">Non Prized Arrear</ion-label>
+                                <ion-input formControlName="nonprizedarrear" type="number" value=""
+                                    placeholder="Non Prized Arrear" required>
+                                </ion-input>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label position="stacked">Interest</ion-label>
+                                <ion-input formControlName="interest" type="number" value="" placeholder="Interest"
+                                    required>
+                                </ion-input>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label position="stacked">Other Amount</ion-label>
+                                <ion-input formControlName="otheramount" type="number" value=""
+                                    placeholder="Otheramount">
+                                </ion-input>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label position="stacked">
+                                    Write Narrations
+                                </ion-label>
+                                <ion-input formControlName="narration" type="number" value=""
+                                    placeholder="Narration" required>
+                                </ion-input>
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
                 </div>
             </div>
         </div>
-    </form>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="submit(cashForm.value)">
+        </form>
+
+        
+        <ion-button type="submit" expand="block" (click)="submit(cashForm.value)" class="btn">Submit </ion-button>
+
+    </div>
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="submit(cashForm.value)">
         <ion-fab-button [disabled]="!cashForm.valid">
             <ion-icon name="arrow-forward-outline"></ion-icon>
         </ion-fab-button>
-    </ion-fab>
+    </ion-fab> -->
     <!-- <button  type="submit" (click)="submit(cashForm.value)">go</button> -->
 </ion-content>

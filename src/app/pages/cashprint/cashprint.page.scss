@@ -23,14 +23,15 @@
     font-size: 30px;
 }
 
-.print{
-    --background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
 
-}
 ion-img{
     width:100px;
     padding-top:2rem;
     
+}
+
+.mt-1{
+    margin-top: 10px;
 }
 .print_branch{
 display:flex;
@@ -50,7 +51,7 @@ justify-content: space-between;
     font-weight: bold;
 }
 .buttons{
-    margin-left:10px;
+    margin:16px;
     .sms{
         margin-left:12px;
         background: white;
@@ -60,18 +61,11 @@ justify-content: space-between;
         border-radius:15px;
         border:1px solid #413E95;
     }
-    .print{
-        background: #413E95;
-        color:white;
-        width:25%;
-        height:32px;
-        border-radius:15px;
-
-    }
 }
 .sig{
-    color:#7F7F7F;
-    padding-left: 12px;
+    line-height: 24px;
+    color: #7F7F7F;
+    padding: 16px;
 }
 .text1{
     display: inline-block;
@@ -95,11 +89,10 @@ justify-content: space-between;
  }
  .branch_name{
      text-align:center;
-     
-     p{
-         color:black;
-     }
  }
  .receipt_date{
  padding:20px;
+ }
+ .space_margin{
+     margin-top: 20px;
  }

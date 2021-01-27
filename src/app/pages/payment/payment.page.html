@@ -2,7 +2,7 @@
 
   <section class="customer_details">
     <ion-row size="12">
-      <ion-col class="customer_name" size="9" size="9">
+      <ion-col class="customer_name" size="9">
         <h2 size="8">{{user_details?.MemberName}}</h2>
         <h5 size="8">{{today | date: 'dd/MM/yyyy'}}</h5>
       </ion-col>
@@ -26,9 +26,11 @@
 
   <ion-card class="card_bg" *ngFor="let value of newarr">
     <div class="chits_item_details">
-      <ion-avatar class="mr-1">
-        <img src="{{imageUrl}}{{value?.url}}" onError="this.src='assets/images/user.jpg'">
-      </ion-avatar>
+      <div class="mr-1">
+        <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)"></ion-checkbox>
+
+        <!-- <img src="{{imageUrl}}{{value?.url}}" onError="this.src='assets/images/user.jpg'"> -->
+      </div>
 
       <table class="table chit_details">
         <tbody>
@@ -109,7 +111,6 @@
       <p size="6">current Due : <span>{{value?.CurrentDueAmount}}</span></p>
       <p size="6">Total paid : <span>{{value?.totalchitvalue}}</span></p>
     </div>
-    <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)"></ion-checkbox>
 
   </ion-card>
   <ion-card *ngIf="length1 === 0">
