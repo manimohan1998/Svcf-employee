@@ -14,7 +14,7 @@
     </div>
   </section>
 
-  <div *ngFor="let img of data">
+  <div *ngFor="let p of print_cash_page">
     <ion-card class="card_bg">
       <ion-card-content>
         <div class="ofz_img">
@@ -37,7 +37,7 @@
           <p>Receipt issued under the chit funds Act 1982</p>
         </div>
 
-        <div class="receipt_content">
+        <div class="receipt_content" >
           <h3>
             CD/REC.SERIES
           </h3>
@@ -67,6 +67,8 @@
                 <td>:</td>
                 <td>{{p.penaltyForOverdue}}</td>
               </tr>
+              <p class="grand_total">Grand Total:<span>Rs.{{p.total}}</span></p>
+
             </tbody>
           </table>
         </div>
@@ -74,8 +76,7 @@
     </ion-card>
   </div>
 
-  <p class="grand_total">Grand Total:<span>Rs.{{p.total}}</span>
-  </p>
+  
   <p class="sig">This is a computer generated Receipt hence signature<br> is not required</p>
   <div class="buttons">
     <ion-button class="print" (click)="generate()">Generate Receipt</ion-button>

@@ -52,7 +52,7 @@
           </tr>
           <tr>
             <td>
-              <span class="branch_name">{{val.BranchName}}</span>
+              <span class="branch_name">{{value.BranchName}}</span>
             </td>
           </tr>
 
@@ -62,7 +62,7 @@
               <p>:</p>
             </td>
             <td>
-              <span>{{val.ChitNo}}</span>
+              <span>{{value.ChitNo}}</span>
             </td>
           </tr>
 
@@ -102,13 +102,15 @@
       </table>
     </div>
 
-    <div class="chit_status" [ngClass]="val.IsPrized === 'Y'?'green':'red'">
-      <p>{{val.IsPrized === 'Y'?'Prized':'Non-Prized'}}</p>
+    <div class="chit_status" [ngClass]="value.IsPrized === 'Y'?'green':'red'">
+      <p>{{value.IsPrized === 'Y'?'Prized':'Non-Prized'}}</p>
     </div>
     <div class="bottom_sec">
       <p size="6">current Due : <span>{{value?.CurrentDueAmount}}</span></p>
       <p size="6">Total paid : <span>{{value?.totalchitvalue}}</span></p>
     </div>
+    <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)"></ion-checkbox>
+
   </ion-card>
   <ion-card *ngIf="length1 === 0">
     <ion-img class="no" src="assets/images/nodata.jpeg"></ion-img>
