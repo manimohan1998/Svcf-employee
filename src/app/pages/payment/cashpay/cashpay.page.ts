@@ -6,7 +6,7 @@ import 'moment/locale/pt-br';
 import * as moment from 'moment';
 import { LoadingController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-
+import { Toast } from '@ionic-native/toast/ngx';
 @Component({
 selector: 'app-payment',
 templateUrl: './cashpay.page.html',
@@ -64,18 +64,16 @@ receipt_name:any;
 trigger_sum:any;
 new_name:any;
 voucher_count:any;
-constructor(private fb: FormBuilder,private http: HttpClient, public loadingController: LoadingController, private router: Router, private route: ActivatedRoute, public paymentservice: PaymentService) {
+newvoucher_count:any;
+constructor(private fb: FormBuilder,private toast: Toast,private http: HttpClient, public loadingController: LoadingController, private router: Router, private route: ActivatedRoute, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
 this.new = this.router.getCurrentNavigation().extras.state.user6;
 this.new10 = this.router.getCurrentNavigation().extras.state.user10;
-console.log(this.new10);
 for (let i = 0; i < this.new10.length; i++) {
 this.branch_new = (this.new10[i].BranchID);
 this.head = (this.new10[i].headID);
-console.log(this.new10[i].BranchID);
 this.branch1.push(this.branch_new);
-console.log(this.branch1);
 this.sampletest1 = [{
 BranchID: this.new10[i].BranchID,
 HeadID: this.new10[i].headID
@@ -84,13 +82,11 @@ this.sampledata.push(this.sampletest1);
 this.sampledata1 = [].concat.apply([], this.sampledata);
 }
 this.new_array = this.new;
-console.log(this.new_array);
 }
 })
 }
 ngOnInit() {
 this.paymentservice.receiptseries('BCAPP').subscribe(res=>{
-console.log(res)
 this.voucher_count=res;
 })
 var num=0;
@@ -102,15 +98,12 @@ return o;
 for (let i=0;i<this.result.length;i++){
   num+=(parseFloat( this.result[i].total))
   this.grand_total=num;
-  console.log(this.result,"gt")
   }
   this.post_id= localStorage.getItem('col_id')
   this.nedate = new Date();
-  console.log(this.nedate);
   this.day = moment(this.nedate.toLocaleString()).format("DD");
   this.month = moment(this.nedate.toLocaleString()).format("MM");
   this.year = moment(this.nedate.toLocaleString()).format("YYYY");
-  console.log(this.month)
   this.submitForm = new FormGroup({
   formArrayName: this.fb.array([])
   })
@@ -121,6 +114,7 @@ for (let i=0;i<this.result.length;i++){
   Object.keys(this.result).forEach((i) => {
   controlArray.push(
   this.fb.group({
+  branchprefix: new FormControl(this.result[i].branchprefix, Validators.required),
   branchname: new FormControl(this.result[i].branchname, Validators.required),
   groupno: new FormControl(this.result[i].groupno, Validators.required),
   totalchit: new FormControl(this.result[i].totalchit, Validators.required),
@@ -147,7 +141,6 @@ for (let i=0;i<this.result.length;i++){
   this.router.navigateByUrl('payment/cash')
   }
   edit() {
-  console.log(this.new_array);
   let navigationExtras: NavigationExtras = {
   state: {
   user7: true,
@@ -199,13 +192,16 @@ for (let i=0;i<this.result.length;i++){
   }
   }
   for (let i = 0; i < this.sampletest.length; i++) {
-  console.log(this.sampletest[i].branchname,"naming")
-  var strFirstThree = this.sampletest[i].branchname.substring(0,3).toUpperCase();;
-  console.log(strFirstThree)
+  // var strFirstThree = this.sampletest[i].branchprefix.substring(0,3).toUpperCase();;
+  var strFirstThree = this.sampletest[i].branchprefix;
+  this.voucher_count +=1
+  let number=this.padLeadingZeros(this.voucher_count, 8);
+  this.newvoucher_count=number;
+  console.log(this.newvoucher_count,"dashb")
   this.new_name=strFirstThree;
-  this.voucher_count=this.voucher_count+1;
+  //this.voucher_count=this.voucher_count+1;
   console.log(this.trigger,"trigg")
-  this.receipt_name=this.new_name+localStorage.getItem('col_id')+ this.voucher_count;
+  this.receipt_name='B' + '-'+ this.new_name+localStorage.getItem('col_id')+ this.newvoucher_count;
   console.log(this.receipt_name,"rec")
   if(this.sampletest[i].prizedarrear !=0 ){
   this.cashpdata = [
@@ -236,7 +232,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].prizedarrear,
@@ -265,7 +261,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -295,7 +291,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -325,7 +321,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   }
   ]
   }
@@ -358,7 +354,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
@@ -387,7 +383,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -417,7 +413,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -447,7 +443,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   }
   ]
   }
@@ -480,7 +476,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
@@ -509,7 +505,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -539,7 +535,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -569,7 +565,7 @@ for (let i=0;i<this.result.length;i++){
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.voucher_count
+  "VoucherCount":this.newvoucher_count
   }
   ]
   
@@ -579,21 +575,19 @@ for (let i=0;i<this.result.length;i++){
   for (let i = this.cashdata1.length - 1; i >= 0; --i) {
   if (this.cashdata1[i].Amount == "0") {
   this.cashdata1.splice(i, 1);
-  console.log(this.cashdata1)
   }
   }
   }
-
   this.paymentservice.post_vouchercash(this.cashdata1).subscribe(res => {
-  console.log(res);
   this.voucher_res = res;
   if (res) {
   this.dismiss();
   this.second_voucher = res;
-  alert('sucessfully updated');
+  this.presentToast('sucessfully updated');
+  //alert('sucessfully updated');
   localStorage.setItem("print_cash", JSON.stringify(this.voucher_res))
   this.router.navigateByUrl('cashprint');
- 
+  
   }
   else {
   alert('voucher error');
@@ -628,5 +622,16 @@ for (let i=0;i<this.result.length;i++){
   async dismiss() {
   this.isLoading = false;
   return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  }
+  padLeadingZeros(num, size) {
+  var s = num+"";
+  while (s.length < size) s = "0" + s;
+  return s;
+  }
+  async presentToast(message) {
+  this.toast.show(message, '2000', 'bottom').subscribe(
+  toast => {
+  console.log(toast);
+  });
   }
   }

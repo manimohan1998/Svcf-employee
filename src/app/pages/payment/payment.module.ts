@@ -10,6 +10,7 @@ import { PaymentPage } from './payment.page';
 import { CashPage } from './cash/cash.page';
 import { CashPayPage } from './cashpay/cashpay.page';
 import { MaterialModule } from '../../material/material.module';
+import { Toast } from '@ionic-native/toast/ngx';
 
 const routes: Routes = [
   {
@@ -37,6 +38,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [PaymentPage,CashPage,CashPayPage],
-  providers:[]
+  providers:[Toast]
 })
 export class PaymentPageModule {}

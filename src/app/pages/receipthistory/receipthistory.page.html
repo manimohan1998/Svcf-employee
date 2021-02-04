@@ -1,0 +1,97 @@
+<ion-header>
+<ion-toolbar>
+<ion-item>
+<ion-icon name="arrow-back-outline" (click)="previous()"></ion-icon>
+<ion-title>Receipt History</ion-title>
+</ion-item>
+</ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="svcf_recepit_page svcf_dashboard_page">
+<form [formGroup]="receiptFormGroup" autocomplete="off" class="receipt_form">
+  <mat-form-field>
+  <input matInput [matDatepicker]="picker" placeholder="From Date"  formControlName="from_date"
+  (click)="picker.open()">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+  <input matInput [matDatepicker]="picker1" placeholder="To Date"  formControlName="to_date"
+  (click)="picker.open()">
+  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+  <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  <ion-button type="submit" class="btn_right" [disabled]="!receiptFormGroup.valid" (click)="history()">Submit
+  </ion-button>
+</form>
+<section class="payment" *ngIf="length != 0">
+  <div *ngFor="let p of receipt_history" >
+    <ion-card class="card_bg">
+    <ion-card-content>
+    <div class="ofz_img">
+      <img src="../../../assets/images/img.png">
+      <div class="branch_name">
+        <p>Branch Name:<span>{{p.branchName}}</span></p>
+        <p>Form No: <span>VF1</span></p>
+      </div>
+    </div>
+    <div class="logo">
+      <img src="../../../assets/images/logo.png">
+    </div>
+    <div class="ofz_address">
+      <h1>SREE VISALAM CHIT FUND LTD.</h1>
+      <p>Register Office: Tirunelveli - 3</p>
+      <p>(See Section 23 and Rule 25) </p>
+      <p>Receipt issued under the chit funds Act 1982</p>
+    </div>
+    <div class="receipt_content">
+      <h3>
+      CD/REC.SERIES
+      </h3>
+      <div class="receipt_no">
+        <p>Date/Time: <span>{{p.paidDate |date:'dd-MM-yyyy HH:mm'}}</span></p>
+        <p>Receipt No: <span>{{p.appReceiptno}}</span></p>
+      </div>
+      <table class="table receipt_amts">
+        <tbody>
+          <tr>
+            <th>Customer Name</th>
+            <td>:</td>
+            <td>{{p.customerName}}</td>
+          </tr>
+          <tr>
+            <th>Branch Name</th>
+            <td>:</td>
+            <td>{{p.branchName}}</td>
+          </tr>
+          <tr>
+            <th>Chit No</th>
+            <td>:</td>
+            <td>{{p.chitNo}}</td>
+          </tr>
+          <tr>
+            <th>Chit Agreement No</th>
+            <td>:</td>
+            <td>{{p.chitAgreementno}}</td>
+          </tr>
+          <tr>
+            <th>Chit Installment No</th>
+            <td>:</td>
+            <td>{{p.currentInstno}}</td>
+          </tr>
+          <tr>
+            <th>Interest</th>
+            <td>:</td>
+            <td>{{p.interest}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="space_margin">
+        <p class="grand_total">Total:<span>Rs.{{p.total}}</span></p>
+      </div>
+      <p  class="sig"><span>Note: </span> This is a computer generated Receipt hence signature is not required</p>
+    </div>
+    </ion-card-content>
+    </ion-card>
+  </div>
+</section>
+</ion-content>

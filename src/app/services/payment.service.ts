@@ -33,5 +33,8 @@ print_details(print_id){
 receiptseries(series){
 	return this.http.get(environment.Baseurl+'ReceiptNo/Series?Series='+series)
 }
+receipthistory(mid,fromdate,todate){
+  return this.http.get(environment.Baseurl+'VoucherHistory/Mid?Mid='+mid +'&&FromDate='+fromdate+'&&ToDate='+todate)
+}
 
 }

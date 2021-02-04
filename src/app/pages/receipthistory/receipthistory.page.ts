@@ -1,0 +1,65 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PaymentService } from '../../services/payment.service';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
+import { LoadingController } from '@ionic/angular';
+@Component({
+selector: 'app-receipthistory',
+templateUrl: './receipthistory.page.html',
+styleUrls: ['./receipthistory.page.scss'],
+})
+export class ReceipthistoryPage implements OnInit {
+receiptFormGroup: FormGroup;
+value:any;
+colid:any;
+receipt_history:any;
+length:any;
+isLoading = false;
+constructor(public fb: FormBuilder,public loadingController: LoadingController, private paymentservice:PaymentService,private router: Router,private route: ActivatedRoute) {
+this.route.queryParams.subscribe(params => {
+if (this.router.getCurrentNavigation().extras.state) {
+this.value = this.router.getCurrentNavigation().extras.state.user;
+}
+})
+this.colid=localStorage.getItem('col_id')
+}
+ngOnInit() {
+this.receiptFormGroup = this.fb.group({
+from_date: ['', Validators.required],
+to_date: ['', Validators.required],
+
+});
+}
+history(){
+this.present();
+this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("yyyy/MM/DD");
+this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("yyyy/MM/DD");
+this.paymentservice.receipthistory(this.colid,this.receiptFormGroup.value.from_date,this.receiptFormGroup.value.to_date).subscribe(res=>{
+this.dismiss();
+this.receipt_history=res;
+this.length=this.receipt_history.length
+})
+}
+previous(){
+this.router.navigateByUrl('dashboard')
+}
+async present() {
+this.isLoading = true;
+return await this.loadingController.create({
+message: 'Loading,Please wait.....'
+}).then(a => {
+a.present().then(() => {
+console.log('presented');
+if (!this.isLoading) {
+a.dismiss().then(() => console.log('abort presenting'));
+}
+});
+});
+}
+async dismiss() {
+this.isLoading = false;
+return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+}
+}

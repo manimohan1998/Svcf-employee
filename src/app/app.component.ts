@@ -28,6 +28,7 @@ export class AppComponent {
 
   initializeApp() {
             this.initializeBackButtonCustomHandler();
+         this.statusBar.backgroundColorByHexString('#30ADFF');
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

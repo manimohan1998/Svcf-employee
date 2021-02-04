@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from  './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +19,6 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
   providers: [
     StatusBar,
     SplashScreen,
-    FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
