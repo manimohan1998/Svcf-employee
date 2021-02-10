@@ -9,6 +9,7 @@ import { ReceipthistoryPageRoutingModule } from './receipthistory-routing.module
 
 import { ReceipthistoryPage } from './receipthistory.page';
 import { MaterialModule } from '../../material/material.module';
+import { Toast } from '@ionic-native/toast/ngx';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { MaterialModule } from '../../material/material.module';
     MaterialModule,
     ReceipthistoryPageRoutingModule
   ],
-  declarations: [ReceipthistoryPage]
+  declarations: [ReceipthistoryPage],
+  providers:[Toast]
 })
 export class ReceipthistoryPageModule {}

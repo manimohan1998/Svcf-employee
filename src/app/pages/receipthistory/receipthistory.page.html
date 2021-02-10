@@ -16,7 +16,7 @@
   </mat-form-field>
   <mat-form-field>
   <input matInput [matDatepicker]="picker1" placeholder="To Date"  formControlName="to_date"
-  (click)="picker.open()">
+  (click)="picker1.open()">
   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
   <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
@@ -24,7 +24,7 @@
   </ion-button>
 </form>
 <section class="payment" *ngIf="length != 0">
-  <div *ngFor="let p of receipt_history" >
+  <div *ngFor="let p of receipt_history" class="history_card">
     <ion-card class="card_bg">
     <ion-card-content>
     <div class="ofz_img">
@@ -44,12 +44,20 @@
       <p>Receipt issued under the chit funds Act 1982</p>
     </div>
     <div class="receipt_content">
+      <ion-row size="12">
+        <ion-col size="6">
       <h3>
       CD/REC.SERIES
       </h3>
+    </ion-col>
+    <ion-col size="6">
+        <p>Date: <span>{{p.paidDate |date:'dd-MM-yyyy'}}</span></p>
+      </ion-col>
+              </ion-row>
       <div class="receipt_no">
-        <p>Date/Time: <span>{{p.paidDate |date:'dd-MM-yyyy HH:mm'}}</span></p>
+
         <p>Receipt No: <span>{{p.appReceiptno}}</span></p>
+      
       </div>
       <table class="table receipt_amts">
         <tbody>
@@ -78,15 +86,36 @@
             <td>:</td>
             <td>{{p.currentInstno}}</td>
           </tr>
+           <tr>
+            <th>Current due</th>
+            <td>:</td>
+            <td>{{p.currentDue}}</td>
+          </tr>
+             <tr *ngIf="p?.prizedArrear != 0">
+            <th>Arrear</th>
+            <td>:</td>
+            <td>{{p.prizedArrear}}</td>
+          </tr>
+             <tr *ngIf="p?.nonPrizedArrear != 0">
+            <th>Arrear</th>
+            <td>:</td>
+            <td>{{p.nonPrizedArrear}}</td>
+          </tr>
           <tr>
             <th>Interest</th>
             <td>:</td>
             <td>{{p.interest}}</td>
           </tr>
+            <tr>
+            <th>Other Receipts</th>
+            <td>:</td>
+            <td>{{p.otherReceipts}}</td>
+          </tr>
         </tbody>
       </table>
       <div class="space_margin">
-        <p class="grand_total">Total:<span>Rs.{{p.total}}</span></p>
+        <p class="grand_total">Total<span>₹
+ {{p.total}}</span></p>
       </div>
       <p  class="sig"><span>Note: </span> This is a computer generated Receipt hence signature is not required</p>
     </div>

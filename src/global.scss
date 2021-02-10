@@ -126,6 +126,9 @@ ion-loading {
     border-left: 8px solid #050D19;
     align-items: center;
     justify-content: space-between;
+    p{
+    font-weight:bo
+    }
     span{
         font-size: 24px;
     }
@@ -319,6 +322,8 @@ ion-label {
         }
     }
     .card_bg{
+                margin-top: -12px;
+
         .chits_item_details{
             display: flex;
             align-items: flex-start;
@@ -330,6 +335,7 @@ ion-label {
                 margin-right: 10px;
                 border: 1px solid #ccc;
                 border-radius: 50%;
+                margin-top: 80px;
                 --background: linear-gradient(to right, #DBDBDB 0%, #bfbfbf 100%);
                 .checkbox-icon{
                 --background:#DBDBDB;
@@ -342,12 +348,14 @@ ion-label {
               color: #86868c;
               margin-bottom: 8px;
               text-align: left;
+              padding:5px;
             }
             td{
+                padding:5px;
               p {
                 font-size: 14px;
                 color: #86868c;
-                margin-bottom: 8px;
+                margin-bottom: 0px;
                 margin-top: 0;
                 }
                 span {
@@ -563,7 +571,7 @@ ion-label {
                   text-align: left;
                   font-size: 14px;
                   text-transform: capitalize;
-                  color: #C0C0C1;
+                  color: #3D3D4D;
                   font-weight: 300;
                 span{
                   color: #222B41;
@@ -578,7 +586,7 @@ ion-label {
                   text-align: left;
                   font-size: 14px;
                   text-transform: capitalize;
-                  color: #C0C0C1;
+                  color: #3D3D4D;
                   font-weight: 300;
                  padding: 5px;
                   &:nth-child(2){

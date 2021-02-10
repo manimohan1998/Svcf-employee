@@ -6,7 +6,7 @@
   <h5 size="8">{{today | date:'dd/MM/yyyy'}}</h5>
   </ion-col>
   <ion-col class="menu" size="1">
-  <ion-icon name="ellipsis-vertical-outline" (click)="logout()"></ion-icon>
+  <ion-icon name="exit" (click)="logout()"></ion-icon>
   </ion-col>
   </ion-row>
 </section>
@@ -21,7 +21,7 @@
       <div [formGroupName]="i">
         <ion-card>
         <ion-card-header>
-        <p>Chit Value:<span>₹ {{d.totalchit}}</span></p>
+        <p>Chit Value<span>₹ {{d.totalchit}}</span></p>
         <p class="chit_no">{{d.chitgroupid}}</p>
         </ion-card-header>
         <ion-card-content>
@@ -42,7 +42,7 @@
         readonly>
         </ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="d?.interest != 0">
         <ion-label position="stacked">Interest</ion-label>
         <ion-input formControlName="interest" type="number" value="" placeholder="interest" readonly>
         </ion-input>

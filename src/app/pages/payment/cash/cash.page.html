@@ -6,7 +6,7 @@
     <h5 size="8">{{today | date:'dd/MM/yyyy'}}</h5>
     </ion-col>
     <ion-col class="menu" size="1">
-    <ion-icon name="ellipsis-vertical-outline" (click)="logout()"></ion-icon>
+    <ion-icon name="exit" (click)="logout()"></ion-icon>
     </ion-col>
     </ion-row>
 </section>
@@ -15,37 +15,43 @@
         <h3>Chit Details</h3>
         <ion-icon name="create-outline" slot="end"></ion-icon>
     </div>
-    <form [formGroup]="cashForm" novalidate>
+    <form [formGroup]="cashForm" >
         <div [formArrayName]="'formArrayName'" class="payment_form">
             <div *ngFor="let n of i_details; let i = index">
                 <div [formGroupName]="i">
                     <ion-card>
                     <ion-card-header>
-                    <p>Chit Value:<span>₹ {{n?.totalchitvalue}}</span></p>
+                    <p>Chit Value<span>₹ {{n?.totalchitvalue}}</span></p>
                     <p class="chit_no">{{n?.chitgroupid}}</p>
                     </ion-card-header>
                     <ion-card-content>
-                    <ion-item>
+                    <ion-item *ngIf="n?.NonPrizedArrear == 0 && n?.PrizedArrear == 0">
                     <ion-label position="stacked">Current Due</ion-label>
                     <ion-input formControlName="amountreceived" type="number" value=""
-                    placeholder="Current Due" required>
+                    placeholder="Current Due" pattern="^[1-9]\d*$" >
                     </ion-input>
                     </ion-item>
-                    <ion-item *ngIf="n?.isprized == 'Prized'">
-                    <ion-label position="stacked">Arrear Amount</ion-label>
+                    <ion-item *ngIf="n?.NonPrizedArrear != 0 || n?.PrizedArrear != 0">
+                     <ion-label position="stacked">Current Due</ion-label>
+                    <ion-input formControlName="amountreceived" type="number" value=""
+                    placeholder="Current Due">
+                    </ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="n?.isprized == 'Prized' && n?.PrizedArrear != 0">
+                    <ion-label position="stacked">Prized Arrear </ion-label>
                     <ion-input formControlName="prizedarrear" type="number" value=""
-                    placeholder="Prized Arrear" >
+                    placeholder="Prized Arrear" (ionInput)="check()"  >
                     </ion-input>
                     </ion-item>
                     <ion-item *ngIf="n?.isprized == 'Non-Prized' && n?.NonPrizedArrear !=0 ">
                     <ion-label position="stacked">Non Prized Arrear</ion-label>
-                    <ion-input formControlName="nonprizedarrear" type="number" value=""
-                    placeholder="Non Prized Arrear" required>
+                    <ion-input formControlName="nonprizedarrear" type="number" 
+                    placeholder="Non Prized Arrear"  (ionInput)="check()"  >
                     </ion-input>
                     </ion-item>
-                    <ion-item>
+                    <ion-item *ngIf="n?.NonPrizedArrear != 0 || n?.PrizedArrear != 0">
                     <ion-label position="stacked">Interest</ion-label>
-                    <ion-input formControlName="interest" type="number" value="" placeholder="Interest"
+                    <ion-input formControlName="interest"  type="number" value="" placeholder="Interest" minlength="1" (ionInput)="check()"
                     >
                     </ion-input>
                     </ion-item>
@@ -60,7 +66,7 @@
                     Write Narrations
                     </ion-label>
                     <ion-input formControlName="narration" type="text" value=""
-                    placeholder="Narration" required>
+                    placeholder="Narration" required >
                     </ion-input>
                     </ion-item>
                     </ion-card-content>
@@ -68,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <ion-button type="submit" expand="block"  (click)="submit(cashForm.value)" class="btn" [disabled]="!cashForm.valid" >Submit </ion-button>
+        <ion-button type="submit" expand="block"  (click)="submit(cashForm.value)" class="btn" [disabled]="cashForm.invalid || test == true" >Submit </ion-button>
     </form>
 </div>
 </ion-content>

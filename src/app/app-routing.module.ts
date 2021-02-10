@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'receipthistory',
     loadChildren: () => import('./pages/receipthistory/receipthistory.module').then( m => m.ReceipthistoryPageModule)
   },
+  {
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
+  },
 
 ];
 

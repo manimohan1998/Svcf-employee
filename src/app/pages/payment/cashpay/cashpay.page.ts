@@ -208,6 +208,8 @@ for (let i=0;i<this.result.length;i++){
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].prizedarrear,
   "PArrear":this.sampletest[i].prizedarrear,
+    "CurrentDue":this.sampletest[i].amountreceived,
+
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
   "ReceievedBy": "admin",
@@ -236,6 +238,8 @@ for (let i=0;i<this.result.length;i++){
   },
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].prizedarrear,
+    "CurrentDue":this.sampletest[i].amountreceived,
+
   "PArrear":this.sampletest[i].prizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -329,6 +333,7 @@ for (let i=0;i<this.result.length;i++){
   this.cashpdata = [
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
+  "CurrentDue":this.sampletest[i].amountreceived,
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -358,6 +363,8 @@ for (let i=0;i<this.result.length;i++){
   },
   {
   "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
+    "CurrentDue":this.sampletest[i].amountreceived,
+
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -450,7 +457,9 @@ for (let i=0;i<this.result.length;i++){
   else{
   this.cashpdata = [
   {
-  "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
+  "Amount": this.sampletest[i].amountreceived,
+    "CurrentDue":this.sampletest[i].amountreceived,
+
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -479,7 +488,9 @@ for (let i=0;i<this.result.length;i++){
   "VoucherCount":this.newvoucher_count
   },
   {
-  "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
+  "Amount": this.sampletest[i].amountreceived,
+    "CurrentDue":this.sampletest[i].amountreceived,
+
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,

@@ -16,6 +16,7 @@ isLoading = false;
 credentials: any;
 username: any;
 password: any;
+show:boolean;
 user_details: any;
 coll_id: any;
 coll_name: any;
@@ -41,21 +42,31 @@ this.presentToast('Please Enter Valid Credentials');
 }
 else {
 this.loginservice.user_authentication(this.username, this.password).subscribe(res => {
-this.dismiss();
-this.presentToast('You have Logged in successfully');
-this.user_details = res;
-localStorage.setItem("col_id", this.user_details[0].moneycollid);
-localStorage.setItem("col_name", this.user_details[0].moneycollname);
+    if(res['length'] == 0){
+  //alert('Enter valid credential')
+  this.presentToast('Please enter valid credentials');
 
-this.coll_id = this.user_details[0].moneycollid;
-this.coll_name = this.user_details[0].moneycollname;
-let navigationExtras: NavigationExtras = {
-state: {
-//user: this.coll_id,
-user1: this.coll_name
-}
-};
-this.router.navigate(['dashboard'], navigationExtras);
+  this.dismiss();
+
+    }
+    else{
+        this.dismiss();
+        this.presentToast('You have Logged in successfully');
+        this.user_details = res;
+        localStorage.setItem("col_id", this.user_details[0].moneycollid);
+        localStorage.setItem("col_name", this.user_details[0].moneycollname);
+        
+        this.coll_id = this.user_details[0].moneycollid;
+        this.coll_name = this.user_details[0].moneycollname;
+        let navigationExtras: NavigationExtras = {
+        state: {
+        //user: this.coll_id,
+        user1: this.coll_name
+        }
+        };
+        this.router.navigate(['dashboard'], navigationExtras);
+    }
+
 }, error => {
 this.dismiss();
 this.presentToast('Something went wrong');
