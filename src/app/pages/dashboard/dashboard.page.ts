@@ -21,6 +21,7 @@ terms:any;
 items_containers:any;
 isLoading = false;
 
+   filterItems:any;
 constructor(private router: Router,public alertController: AlertController,  public dashboardservice: DashboardService, private route: ActivatedRoute,public loadingController: LoadingController) {
 
 }
@@ -34,6 +35,8 @@ this.present();
 this.dashboardservice.user_details(this.moneycoll_id).subscribe(res => {
 this.dismiss();
 this.details = res;
+ this.filterItems= this.details;
+
 })
 }
 goto(s) {
@@ -86,4 +89,8 @@ history(){
 
 this.router.navigate(['receipthistory']);
 }
+ searching(){
+this.filterItems = this.details.filter(item =>  item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase())) > -1;
+
+ }    
 }
