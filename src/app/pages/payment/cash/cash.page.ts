@@ -28,7 +28,7 @@ linesFormArray:any;
 new_check:any;
 test:boolean=false;
 sum:any;
-
+index_value:any=[];
 constructor(private route: ActivatedRoute,private toast:Toast,public alertController: AlertController, private router: Router, private fb: FormBuilder, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -99,24 +99,50 @@ check(){
 console.log(this.cashForm.value.interest)
 }
 submit(c) {
-  console.log(c)
-  this.new_check=c.formArrayName;
+  this.index_value=[];
+    this.new_check=c.formArrayName;
+      console.log(this.new_check)
 
-  for(let i=0;i<this.new_check.length;i++){
- this.sum=0;
-    this.sum=+this.new_check[i].amountreceived+ +this.new_check[i].prizedarrear + +this.new_check[i].interest+ +this.new_check[i].otheramount + +this.new_check[i].nonprizedarrear;
+for(let i=0;i<this.new_check.length;i++){
+  //if(this.new_check[i].prizedarrear !=)
+}
+    var index = this.new_check.findIndex(img => img.interest === 0 && img.prizedarrear ===0  && img.otheramount ===0 ||img.interest ===0 && img.nonprizedarrear ===0 && img.otheramount ===0 ||img.interest === "" && img.prizedarrear === ""  && img.otheramount === "" ||img.interest === "" && img.nonprizedarrear === ""  && img.otheramount === "" );
+    console.log(index)
+    if(index > -1){
+      alert('i')
+      this.index_value.push(index);
+console.log(this.index_value);
 
-    if(this.sum == 0){
-      this.test=true;
-      this.presentToast('Please enter valid amounts to continue')
-      //alert('Please enter valid amounts')
     }
-    else{
-      this.presentAlertConfirm(c);
-      this.test=false;
-    }
+if(this.index_value.length == 0){
+       this.presentAlertConfirm(c);
+
+}
+else{
+   //      this.presentToast('Please enter valid amounts to continue')
+     alert('Please enter valid amounts to continue')
+
+}
+
+ //  console.log(c)
+ //  this.new_check=c.formArrayName;
+
+ //  for(let i=0;i<this.new_check.length;i++){
+ // this.sum=0;
+ //    this.sum=+this.new_check[i].amountreceived+ +this.new_check[i].prizedarrear + +this.new_check[i].interest+ +this.new_check[i].otheramount + +this.new_check[i].nonprizedarrear;
+
+ //    if(this.sum == 0){
+ //      this.test=true;
+ //      this.presentToast('Please enter valid amounts to continue')
+ //      //alert('Please enter valid amounts')
+ //    }
+ //    else{
+ //      this.presentAlertConfirm(c);
+ //      this.test=false;
+ //    }
  
-  }
+ //  }
+      //this.presentAlertConfirm(c);
 
 }
 logout() {

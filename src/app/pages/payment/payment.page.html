@@ -15,10 +15,11 @@
   <p  class="total_chits">No. of Chits : <span>{{user_details?.chitcount}}</span></p>
 </section>
 <ion-card class="card_bg" *ngFor="let value of newarr">
-<div class="chits_item_details">
-  <ion-avatar><span>
+  <!--  <ion-avatar><span>
     <img src="{{imageUrl}}{{value.imageUrl}}" onError="this.src='assets/images/user.jpg'">
-  </span></ion-avatar>
+  </span></ion-avatar> -->
+<div class="chits_item_details">
+ 
   <div class="mr-1">
     <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)"></ion-checkbox>
   </div>

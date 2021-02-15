@@ -14,7 +14,7 @@
   </ion-col>
   </ion-row>
   <div class="search">
-    <ion-searchbar placeholder="search" [(ngModel)]="terms" (ionInput)="searching()"
+    <ion-searchbar placeholder="search" [(ngModel)]="terms" 
     ></ion-searchbar>
   </div>
 </section>
@@ -27,4 +27,6 @@
 <ion-label class="chit">No. of chits ({{v.chitcount}})</ion-label>
 </ion-item>
 </ion-card>
+<p *ngIf= "terms == ''">dsf</p>
+
 </ion-content>

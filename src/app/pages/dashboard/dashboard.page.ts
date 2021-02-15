@@ -89,8 +89,8 @@ history(){
 
 this.router.navigate(['receipthistory']);
 }
- searching(){
-this.filterItems = this.details.filter(item =>  item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase())) > -1;
+//  searching(){
+// this.filterItems = this.details.filter(item =>  item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase())) > -1;
 
- }    
+//  }    
 }
