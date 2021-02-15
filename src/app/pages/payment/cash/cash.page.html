@@ -25,28 +25,23 @@
                     <p class="chit_no">{{n?.chitgroupid}}</p>
                     </ion-card-header>
                     <ion-card-content>
-                    <ion-item *ngIf="n?.NonPrizedArrear == 0 && n?.PrizedArrear == 0">
-                    <ion-label position="stacked">Current Due</ion-label>
-                    <ion-input formControlName="amountreceived" type="number" value=""
-                    placeholder="Current Due" required >
-                    </ion-input>
-                    </ion-item>
+                   
                     <ion-item *ngIf="n?.NonPrizedArrear != 0 || n?.PrizedArrear != 0">
                      <ion-label position="stacked">Current Due</ion-label>
                     <ion-input formControlName="amountreceived" type="number" value=""
-                    placeholder="Current Due">
+                    placeholder="Current Due" readonly>
                     </ion-input>
                     </ion-item>
                     <ion-item *ngIf="n?.isprized == 'Prized' && n?.PrizedArrear != 0">
-                    <ion-label position="stacked">Prized Arrear </ion-label>
+                    <ion-label position="stacked">Arrear </ion-label>
                     <ion-input formControlName="prizedarrear" type="number" value=""
-                    placeholder="Prized Arrear"   >
+                    placeholder="Prized Arrear" readonly  >
                     </ion-input>
                     </ion-item>
                     <ion-item *ngIf="n?.isprized == 'Non-Prized' && n?.NonPrizedArrear !=0 ">
-                    <ion-label position="stacked">Non Prized Arrear</ion-label>
+                    <ion-label position="stacked"> Arrear</ion-label>
                     <ion-input formControlName="nonprizedarrear" type="number" 
-                    placeholder="Non Prized Arrear"   >
+                    placeholder="Non Prized Arrear" readonly  >
                     </ion-input>
                     </ion-item>
                     <ion-item *ngIf="n?.NonPrizedArrear != 0 || n?.PrizedArrear != 0">

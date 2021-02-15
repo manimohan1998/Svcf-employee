@@ -45,7 +45,7 @@
         </td>
       </tr>
       <tr>
-        <th>Agt No</th>
+        <th>Ag.No</th>
         <td>
           <p>:</p>
         </td>
@@ -64,7 +64,7 @@
           <p>:</p>
         </td>
         <td>
-          <span>{{value?.chitgroupid}}</span>
+          <span>{{value?.chitgroupno}}</span>
         </td>
       </tr>
       <tr>
@@ -74,6 +74,15 @@
         </td>
         <td>
           <span>{{value?.instno}}</span>
+        </td>
+      </tr>
+        <tr>
+        <th>Current Due Amount</th>
+        <td>
+          <p>:</p>
+        </td>
+        <td>
+          <span>{{value?.CurrentDueAmount}}</span>
         </td>
       </tr>
       <tr *ngIf="value?.NonPrizedArrear != 0 ||value?.PrizedArrear!= 0">
@@ -94,8 +103,8 @@
   <!--       <p>{{value?.isprized === 'Y'?'Prized':'Non-Prized'}}</p>
 -->    </div>
 <div class="bottom_sec">
-  <p size="6">Current Due ₹ <span>{{value?.CurrentDueAmount}}</span></p>
-  <p size="6">Chit Value  ₹ <span>{{value?.totalchitvalue}}</span></p>
+<!--   <p size="6">Current Due ₹ <span>{{value?.CurrentDueAmount}}</span></p>
+ -->  <p size="6">Chit Value  ₹ <span>{{value?.totalchitvalue}}</span></p>
 </div>
 </ion-card>
 <ion-card *ngIf="length1 === 0">
