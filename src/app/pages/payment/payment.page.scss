@@ -85,6 +85,8 @@ ion-checkbox{
 ion-card-content{
     p span{
         margin-left: 15px;
+        float:right;
+        margin-top:2px;
 
     }
 }
@@ -126,6 +128,9 @@ ion-card-content{
 .cash{
     --background: linear-gradient(to right, #222428 0%, #354466 100%) !important;
 }
+.alert-message.sc-ion-alert-md {
+font-size:18px;
+}
 .exit{
     color: #fff;
     display: inline-block;
@@ -133,6 +138,18 @@ ion-card-content{
     vertical-align: middle;
 
 
+}
+.inner{
+    margin-top:10px;
+}
+.payable{
+    font-weight:bold;
+    span{
+    background: #34a21485;
+    padding: 2px 10px;
+    /* margin-left: 69px; */
+    border-radius: 5px;
+    }
 }
 .arrow{
     margin-top: 1rem;

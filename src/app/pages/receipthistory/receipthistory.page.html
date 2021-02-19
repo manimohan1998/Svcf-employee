@@ -23,7 +23,11 @@
   <ion-button type="submit" class="btn_right" [disabled]="!receiptFormGroup.valid" (click)="history()">Submit
   </ion-button>
 </form>
-<section class="payment" *ngIf="length != 0">
+<!-- <div class="search" *ngIf="length != 0">
+    <ion-searchbar placeholder="search" [(ngModel)]="receipt" 
+    ></ion-searchbar>
+  </div> -->
+  <section class="payment" *ngIf="length != 0">
   <div *ngFor="let p of receipt_history" class="history_card">
     <ion-card class="card_bg">
     <ion-card-content>
@@ -31,7 +35,7 @@
       <img src="../../../assets/images/img.png">
       <div class="branch_name">
         <p>Branch Name:<span>{{p.branchName}}</span></p>
-        <p>Form No: <span>VF1</span></p>
+        <p>Form No: <span>XVI</span></p>
       </div>
     </div>
     <div class="logo">
@@ -39,7 +43,7 @@
     </div>
     <div class="ofz_address">
       <h1>SREE VISALAM CHIT FUND LTD.</h1>
-      <p>Register Office: Tirunelveli - 3</p>
+      <p>Registered Office: Tirunelveli - 6</p>
       <p>(See Section 23 and Rule 25) </p>
       <p>Receipt issued under the chit funds Act 1982</p>
     </div>

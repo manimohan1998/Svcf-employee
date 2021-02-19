@@ -19,6 +19,10 @@ colid:any;
 receipt_history:any;
 length:any;
 isLoading = false;
+customernames:any=[];
+receiptnum:any=[];
+chitnum:any=[];
+branchname:any=[];
 constructor(public fb: FormBuilder,private toast:Toast,public loadingController: LoadingController, private paymentservice:PaymentService,private router: Router,private route: ActivatedRoute) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -46,7 +50,12 @@ this.presentToast('No data available')
 else{
   this.receipt_history=res;
 this.length=this.receipt_history.length
-
+for (let i=0;i<this.receipt_history.length;i++){
+	this.customernames.push(this.receipt_history[i].customerName);
+	this.receiptnum.push(this.receipt_history[i].appReceiptno);
+	this.branchname.push(this.receipt_history[i].branchName);
+	this.chitnum.push(this.receipt_history[i].chitNo)
+}
 }
 })
 }

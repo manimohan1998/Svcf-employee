@@ -6,7 +6,9 @@
   <h5 size="8">{{today | date: 'dd/MM/yyyy'}}</h5>
   </ion-col>
   <ion-col class="profile_img" size="3">
-  
+    <ion-avatar><span>
+    <img src="{{imageUrl}}{{profile}}" onError="this.src='assets/images/user.jpg'">
+  </span></ion-avatar>
   </ion-col>
   <ion-col class="menu" size="1">
   <ion-icon name="exit" (click)="logout()"></ion-icon>
@@ -15,12 +17,10 @@
   <p  class="total_chits">No. of Chits : <span>{{user_details?.chitcount}}</span></p>
 </section>
 <ion-card class="card_bg" *ngFor="let value of newarr">
-  <!--  <ion-avatar><span>
-    <img src="{{imageUrl}}{{value.imageUrl}}" onError="this.src='assets/images/user.jpg'">
-  </span></ion-avatar> -->
+ 
 <div class="chits_item_details">
  
-  <div class="mr-1">
+  <div class="mr-1" >
     <ion-checkbox (ionChange)="updateCheckedOptions(value, $event)"></ion-checkbox>
   </div>
   <table class="table chit_details">
@@ -35,7 +35,7 @@
           
         </td>
       </tr>
-      <tr>
+     <!--  <tr>
         <th>Group No</th>
         <td>
           <p>:</p>
@@ -43,9 +43,9 @@
         <td>
           {{ value?.groupno }}
         </td>
-      </tr>
+      </tr> -->
       <tr>
-        <th>Ag.No</th>
+        <th>Ag.No/Year</th>
         <td>
           <p>:</p>
         </td>
@@ -68,7 +68,7 @@
         </td>
       </tr>
       <tr>
-        <th>Current inst no</th>
+        <th>Current Inst No</th>
         <td>
           <p>:</p>
         </td>
@@ -77,28 +77,28 @@
         </td>
       </tr>
         <tr>
-        <th>Current Due Amount</th>
+        <th>Current Due</th>
         <td>
           <p>:</p>
         </td>
         <td>
-          <span>{{value?.CurrentDueAmount}}</span>
+          <span> ₹ {{value?.CurrentDueAmount}}</span>
         </td>
       </tr>
-      <tr *ngIf="value?.NonPrizedArrear != 0 ||value?.PrizedArrear!= 0">
-        <th>Arrear Amount</th>
+      <tr >
+        <th>Arrear</th>
         <td>
           <p>:</p>
         </td>
         <td>
-          <p *ngIf="value?.NonPrizedArrear != 0"> <span>{{value?.NonPrizedArrear}}</span></p>
-          <p *ngIf="value?.PrizedArrear != 0"><span>{{value?.PrizedArrear}}</span></p>
+          <p *ngIf="value?.isprized === 'Non-Prized'"> <span>₹ {{value?.NonPrizedArrear}}</span></p>
+          <p *ngIf="value?.isprized === 'Prized'"><span>₹ {{value?.PrizedArrear}}</span></p>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-<div class="chit_status" [ngClass]="value?.isprized === 'Y'?'green':'red'">
+<div class="chit_status" [ngClass]="value?.isprized === 'Prized'?'green':'red'">
   <p>{{value?.isprized}}</p>
   <!--       <p>{{value?.isprized === 'Y'?'Prized':'Non-Prized'}}</p>
 -->    </div>
@@ -111,15 +111,15 @@
 <ion-img class="no" src="assets/images/nodata.jpeg"></ion-img>
 </ion-card>
 <section class="p-24">
-  <p style="margin-left:10px;">Mode of payment</p>
   <ion-list>
   <ion-item>
   <ion-label>
   <ion-icon name="cash" class="icon"></ion-icon>
-  <span class="text">Cash Payment</span>
+  <span class="text">Cash Payment </span>
   </ion-label>
-  <ion-icon name="arrow-forward" (click)="cash()"></ion-icon>
   </ion-item>
   </ion-list>
+    <ion-button class="btn" style="width: 100%;" (click)="cash()">Proceed</ion-button>
+
 </section>
 </ion-content>

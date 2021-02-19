@@ -3,7 +3,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Toast } from '@ionic-native/toast/ngx';
-import { LoadingController, NavController, ModalController, AlertController } from '@ionic/angular';
+import { LoadingController, NavController, ModalController, AlertController,Platform } from '@ionic/angular';
 @Component({
 selector: 'app-login',
 templateUrl: './login.page.html',
@@ -22,7 +22,7 @@ coll_id: any;
 coll_name: any;
 passwordType: string = 'password';
 passwordIcon: string = 'eye-off';
-constructor(private fb: FormBuilder, public loadingController: LoadingController, private router: Router, private toast: Toast, public loginservice: LoginService) { }
+constructor(private platform:Platform,private fb: FormBuilder, public loadingController: LoadingController, private router: Router, private toast: Toast, public loginservice: LoginService) { }
 ngOnInit() {
 this.loginForm = this.fb.group({
 username: new FormControl('', Validators.compose([
@@ -32,6 +32,13 @@ password: new FormControl('', Validators.compose([
 Validators.required,]))
 });
 }
+ 
+ 
+// ionViewDidEnter() {
+//   this.platform.backButton.subscribeWithPriority(1, () => {
+//         navigator['app'].exitApp();
+//  });
+// }
 login_values(data) {
 this.present();
 this.credentials = data;

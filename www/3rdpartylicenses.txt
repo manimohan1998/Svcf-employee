@@ -94,9 +94,6 @@ MIT
 @ionic-native/core
 MIT
 
-@ionic-native/file
-MIT
-
 @ionic-native/splash-screen
 MIT
 

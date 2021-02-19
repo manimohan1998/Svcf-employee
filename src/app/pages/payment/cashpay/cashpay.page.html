@@ -1,5 +1,7 @@
 <ion-content class="svcf_dashboard_page svcf_payment_page">
 <section class="customer_details">
+      <ion-icon name="arrow-back-outline" style="font-size: 25px;" (click)="previous()"></ion-icon>
+
   <ion-row size="12">
   <ion-col class="customer_name" size="11">
   <h2 size="8">{{new10[0]?.Membername}}</h2>
@@ -22,7 +24,7 @@
         <ion-card>
         <ion-card-header>
         <p>Chit Value<span>₹ {{d.totalchit}}</span></p>
-        <p class="chit_no">{{d.chitgroupid}}</p>
+        <p class="chit_no">{{d.groupno}}</p>
         </ion-card-header>
         <ion-card-content>
         <ion-item>
@@ -32,17 +34,23 @@
         </ion-input>
         </ion-item>
         <ion-item *ngIf="d?.prizedarrear !=0 ">
-        <ion-label position="stacked">Arrear Amount</ion-label>
+        <ion-label position="stacked">Prized Arrear </ion-label>
         <ion-input formControlName="prizedarrear" type="number" value="" placeholder="Prized Arrear" readonly>
         </ion-input>
         </ion-item>
         <ion-item *ngIf="d?.nonprizedarrear !=0">
-        <ion-label position="stacked">Non Prized Arrear</ion-label>
-        <ion-input formControlName="nonprizedarrear" type="number" value="" placeholder="Non Prized Arrear"
+        <ion-label position="stacked">Non-Prized Arrear</ion-label>
+        <ion-input formControlName="nonprizedarrear" type="number" value="" placeholder="Non-Prized Arrear"
         readonly>
         </ion-input>
         </ion-item>
-        <ion-item *ngIf="d?.interest != 0">
+         <ion-item >
+        <ion-label position="stacked">Amount Received</ion-label>
+        <ion-input formControlName="amountpayable" type="number" value="" placeholder="Amount Received"
+        readonly>
+        </ion-input>
+        </ion-item>
+        <ion-item >
         <ion-label position="stacked">Interest</ion-label>
         <ion-input formControlName="interest" type="number" value="" placeholder="interest" readonly>
         </ion-input>

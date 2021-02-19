@@ -92,7 +92,7 @@ this.voucher_count=res;
 var num=0;
 this.result = this.new_array.map(function(el) {
 var o = Object.assign({}, el);
-o.total = +el.amountreceived + +el.interest + +el.otheramount+ +el.nonprizedarrear + +el.prizedarrear;
+o.total = +el.amountpayable + +el.interest + +el.otheramount;
 return o;
 })
 for (let i=0;i<this.result.length;i++){
@@ -127,6 +127,8 @@ for (let i=0;i<this.result.length;i++){
   agreement: new FormControl(this.result[i].agreement, Validators.required),
   installment: new FormControl(this.result[i].installment, Validators.required),
   amountreceived: new FormControl(Number(this.new_array[i].amountreceived)),
+    amountpayable: new FormControl(Number(this.new_array[i].amountpayable)),
+
   prizedarrear: new FormControl(Number(this.new_array[i].prizedarrear)),
   nonprizedarrear: new FormControl(Number(this.new_array[i].nonprizedarrear)),
   interest: new FormControl(Number(this.result[i].interest)),
@@ -206,7 +208,7 @@ for (let i=0;i<this.result.length;i++){
   if(this.sampletest[i].prizedarrear !=0 ){
   this.cashpdata = [
   {
-  "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].prizedarrear,
+  "Amount": this.sampletest[i].amountpayable,
   "PArrear":this.sampletest[i].prizedarrear,
     "CurrentDue":this.sampletest[i].amountreceived,
 
@@ -237,7 +239,7 @@ for (let i=0;i<this.result.length;i++){
   "VoucherCount":this.newvoucher_count
   },
   {
-  "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].prizedarrear,
+  "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
 
   "PArrear":this.sampletest[i].prizedarrear,
@@ -332,7 +334,7 @@ for (let i=0;i<this.result.length;i++){
   else if(this.sampletest[i].nonprizedarrear != 0){
   this.cashpdata = [
   {
-  "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
+  "Amount": this.sampletest[i].amountpayable,
   "CurrentDue":this.sampletest[i].amountreceived,
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
@@ -362,7 +364,7 @@ for (let i=0;i<this.result.length;i++){
   "VoucherCount":this.newvoucher_count
   },
   {
-  "Amount": +this.sampletest[i].amountreceived+ +this.sampletest[i].nonprizedarrear,
+  "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
 
   "NPArrear":this.sampletest[i].nonprizedarrear,
@@ -457,7 +459,7 @@ for (let i=0;i<this.result.length;i++){
   else{
   this.cashpdata = [
   {
-  "Amount": this.sampletest[i].amountreceived,
+  "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
 
   "NPArrear":this.sampletest[i].nonprizedarrear,
@@ -488,7 +490,7 @@ for (let i=0;i<this.result.length;i++){
   "VoucherCount":this.newvoucher_count
   },
   {
-  "Amount": this.sampletest[i].amountreceived,
+  "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
 
   "NPArrear":this.sampletest[i].nonprizedarrear,

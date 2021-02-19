@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform ,ToastController} from '@ionic/angular';
+import { Platform ,ToastController,AlertController} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router, NavigationExtras } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -18,43 +19,128 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router:Router,
+        private _location: Location,
+    public alertController: AlertController,
+
     public toastController: ToastController
 
   ) {
-         this.initializeBackButtonCustomHandler();
+         //this.initializeBackButtonCustomHandler();
 
     this.initializeApp();
   }
 
   initializeApp() {
-            this.initializeBackButtonCustomHandler();
-         this.statusBar.backgroundColorByHexString('#30ADFF');
-
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+               this.statusBar.backgroundColorByHexString('#30ADFF');
+
       this.splashScreen.hide();
     });
-  }
-  initializeBackButtonCustomHandler(): void {
-    this.platform.ready().then(() => {
-      document.addEventListener("backbutton", () => {
-      if(this.router.url == "/" || this.router.url == "/login"){
-        if (this.counter == 0) {
-          this.counter++;
-          this.presentToast();
-          setTimeout(() => { this.counter = 0 }, 2000)
-        }else {
+
+
+    this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
+      console.log('Back press handler!');
+      if (this._location.isCurrentPathEqualTo('/cashprint')) {
+        this.router.navigateByUrl('dashboard')
+
+        // Show Exit Alert!
+        console.log('Show Exit Alert!');
+        //this.showExitConfirm();
+        processNextHandler();
+      } else if(this._location.isCurrentPathEqualTo('/payment/cash' )) {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        //this._location.back();
+        this.router.navigateByUrl('payment')
+
+      }
+      else if(this._location.isCurrentPathEqualTo('/payment/cashpay' )) {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        //this._location.back();
+        this.router.navigateByUrl('payment/cash')
+
+      }
+       else if(this._location.isCurrentPathEqualTo('/payment' )) {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        //this._location.back();
+        this.router.navigateByUrl('dashboard')
+
+      }
+        else if(this._location.isCurrentPathEqualTo('/dashboard' )) {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        //this._location.back();
+        this.showExitConfirm();
+
+      }
+        else if (this._location.isCurrentPathEqualTo('/receipthistory' )) {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        //this._location.back();
+        this.router.navigateByUrl('dashboard')
+
+      }
+  else  {
+
+        // Navigate to back page
+        console.log('Navigate to back page');
+        //this._location.back();
           navigator['app'].exitApp();
-          }
+
+      }
+    });
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      console.log('Handler called to force close!');
+      this.alertController.getTop().then(r => {
+        if (r) {
+          navigator['app'].exitApp();
         }
-      });
-    })
+      }).catch(e => {
+        console.log(e);
+      })
+    });
+
   }
-  async presentToast() {
-   const toast = await this.toastController.create({
-     message: "Press again to exit",
-     duration: 2000,
-   });
-  toast.present();
- }
+  showExitConfirm() {
+    this.alertController.create({
+      header: 'App termination',
+      message: 'Do you want to close the app?',
+      backdropDismiss: false,
+      buttons: [{
+        text: 'Stay',
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit prevented!');
+        }
+      }, {
+        text: 'Exit',
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    })
+      .then(alert => {
+        alert.present();
+      });
+  }
+
 }
+
+
+
+ //  async presentToast() {
+ //   const toast = await this.toastController.create({
+ //     message: "Press again to exit",
+ //     duration: 2000,
+ //   });
+ //  toast.present();
+ // }

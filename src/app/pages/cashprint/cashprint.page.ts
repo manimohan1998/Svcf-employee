@@ -17,9 +17,20 @@ devices:any;
 api_id:any=[];
 print_cash_page:any;
 isLoading = false;
-constructor(public loadingController: LoadingController,private toast :Toast,public paymentservice:PaymentService,public plt: Platform,private modalCtrl:ModalController, private alertCtrl:AlertController,private router:Router,private route: ActivatedRoute) {
+constructor(private platform:Platform,public loadingController: LoadingController,private toast :Toast,public paymentservice:PaymentService,private modalCtrl:ModalController, private alertCtrl:AlertController,private router:Router,private route: ActivatedRoute) {
 }
+// ionViewDidEnter() {
+//   this.platform.backButton.subscribeWithPriority(1, () => {
+//     this.router.navigateByUrl('dashboard')
+//         //navigator['app'].exitApp();
+//  });
 
+onBack(){
+
+}
+// ionViewWillLeave() {
+//   this.backButtonSub.unsubscribe();
+// }
 ngOnInit() {
 this.cash_print_preview=JSON.parse(localStorage.getItem("print_cash"));
 for(let i=0;i<this.cash_print_preview.length;i++){
@@ -30,7 +41,7 @@ for(let i=0;i<this.cash_print_preview.length;i++){
   })
   }
   previous(){
-  this.router.navigateByUrl('payment/cashpay')
+  this.router.navigateByUrl('dashboard')
   }
   logout(){
   this.router.navigateByUrl('login')

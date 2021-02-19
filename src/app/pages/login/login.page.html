@@ -22,8 +22,7 @@
                 >
               </ion-input>
               <div (click)="show=!show" slot="end" class="eye_icon">
-                <ion-icon name="eye-off" *ngIf="!show"></ion-icon>
-                <ion-icon name="eye" *ngIf="show"></ion-icon>
+                <ion-icon [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()' slot="end"></ion-icon>
               </div>
             </ion-item>
   <section>

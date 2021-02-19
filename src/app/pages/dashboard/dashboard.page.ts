@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DashboardService } from '../../services/dashboard.service';
 import { LoadingController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import { NavController,ModalController,AlertController, Platform } from '@ionic/angular';
 @Component({
 selector: 'app-dashboard',
 templateUrl: './dashboard.page.html',
@@ -22,12 +22,16 @@ items_containers:any;
 isLoading = false;
 
    filterItems:any;
-constructor(private router: Router,public alertController: AlertController,  public dashboardservice: DashboardService, private route: ActivatedRoute,public loadingController: LoadingController) {
+constructor(private platform:Platform,private router: Router,public alertController: AlertController,  public dashboardservice: DashboardService, private route: ActivatedRoute,public loadingController: LoadingController) {
 
+}
+ionViewDidEnter() {
 }
 ngOnInit() {
 
 }
+
+
 ionViewWillEnter(){
 this.moneycoll_name=localStorage.getItem("col_name")
 this.moneycoll_id = localStorage.getItem("col_id");

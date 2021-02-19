@@ -49,14 +49,24 @@
           <tr>
             <th>Received From</th>
             <td>:</td>
-            <td>{{p?.billCollectorName}}</td>
+            <td>{{p?.customerName}}</td>
           </tr>
           <tr>
             <th>Chit No</th>
             <td>:</td>
             <td>{{p?.chitNo}}</td>
           </tr>
-          <tr>
+           <tr>
+            <th>Ag No/Year</th>
+            <td>:</td>
+            <td>{{p?.agreementNo}}</td>
+        <!--   </tr>
+             <tr>
+            <th>Current Inst No</th>
+            <td>:</td>
+            <td>{{p?.currentInstalmentNo}}</td>
+          </tr> -->
+       <!--    <tr>
             <th>Current Due</th>
             <td>:</td>
             <td>{{p?.currentdue}}</td>
@@ -70,13 +80,13 @@
             <th>Arrear amount</th>
             <td>:</td>
             <td>{{p?.NpArrear}}</td>
-          </tr>
-          <tr>
+          </tr> -->
+          <tr *ngIf="p?.penaltyForOverdue != 0">
             <th>Interest</th>
             <td>:</td>
             <td>{{p?.penaltyForOverdue}}</td>
           </tr>
-          <tr>
+          <tr *ngIf="p?.otherReceipts != 0">
             <th>Other amount</th>
             <td>:</td>
             <td>{{p?.otherReceipts}}</td>
@@ -84,7 +94,7 @@
         </tbody>
       </table>
       <div class="space_margin">
-        <p class="grand_total"> Total<span>₹ {{p?.total}}</span></p>
+        <p class="grand_total"> Total Paid<span>₹ {{p?.total}}</span></p>
       </div>
     </div>
     </ion-card-content>

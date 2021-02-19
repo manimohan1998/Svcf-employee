@@ -1,5 +1,7 @@
 <ion-content class="svcf_dashboard_page svcf_payment_page">
 <section class="customer_details">
+    <ion-icon name="arrow-back-outline" style="font-size: 25px;" (click)="previous()"></ion-icon>
+
     <ion-row size="12">
     <ion-col class="customer_name" size="11">
     <h2 size="8">{{i_details[0].Membername}}</h2>
@@ -22,29 +24,37 @@
                     <ion-card>
                     <ion-card-header>
                     <p>Chit Value<span>₹ {{n?.totalchitvalue}}</span></p>
-                    <p class="chit_no">{{n?.chitgroupid}}</p>
+                    <p class="chit_no">{{n?.chitgroupno}}</p>
+
                     </ion-card-header>
                     <ion-card-content>
-                   
-                    <ion-item *ngIf="n?.NonPrizedArrear != 0 || n?.PrizedArrear != 0">
+                   <p class="payable">Amount payable<span>₹ {{n?.TotalPayable}}</span></p>
+          <div class="inner">
+                    <ion-item >
                      <ion-label position="stacked">Current Due</ion-label>
                     <ion-input formControlName="amountreceived" type="number" value=""
                     placeholder="Current Due" readonly>
                     </ion-input>
                     </ion-item>
-                    <ion-item *ngIf="n?.isprized == 'Prized' && n?.PrizedArrear != 0">
+                    <ion-item *ngIf="n?.isprized == 'Prized'">
                     <ion-label position="stacked">Arrear </ion-label>
                     <ion-input formControlName="prizedarrear" type="number" value=""
                     placeholder="Prized Arrear" readonly  >
                     </ion-input>
                     </ion-item>
-                    <ion-item *ngIf="n?.isprized == 'Non-Prized' && n?.NonPrizedArrear !=0 ">
+                    <ion-item *ngIf="n?.isprized == 'Non-Prized' ">
                     <ion-label position="stacked"> Arrear</ion-label>
                     <ion-input formControlName="nonprizedarrear" type="number" 
                     placeholder="Non Prized Arrear" readonly  >
                     </ion-input>
                     </ion-item>
-                    <ion-item *ngIf="n?.NonPrizedArrear != 0 || n?.PrizedArrear != 0">
+                    <ion-item >
+                     <ion-label position="stacked">Amount Received</ion-label>
+                    <ion-input formControlName="amountpayable" type="number" value=""
+                    placeholder="Amount Received"   >
+                    </ion-input>
+                    </ion-item>
+                    <ion-item >
                     <ion-label position="stacked">Interest</ion-label>
                     <ion-input formControlName="interest"  type="number" value="" placeholder="Interest" 
                     >
@@ -64,6 +74,7 @@
                     placeholder="Narration" required >
                     </ion-input>
                     </ion-item>
+                </div>
                     </ion-card-content>
                     </ion-card>
                 </div>

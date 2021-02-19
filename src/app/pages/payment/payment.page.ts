@@ -32,6 +32,7 @@ nonprized_array:any=[];
 arrayprized: any[]=[];
 prized_chits: any[]=[];
 imageUrl:any;
+profile:any;
 constructor(private route: ActivatedRoute,public alertController: AlertController, private router: Router,public paymentservice:PaymentService) {
 
 }
@@ -58,6 +59,7 @@ for (let i=0;i<this.payee_details.length;i++){
   return false;
   });
   this.length1=this.pushvalue.length;
+  this.profile=this.newarr[0].ImgUrl;
   }
   if(this.payee_details[i].isprized == 'N'){
   this.payee_details[i].isprized='Non-Prized';
