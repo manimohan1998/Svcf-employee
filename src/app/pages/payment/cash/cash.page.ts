@@ -156,8 +156,15 @@ for (let i=0;i<this.final_total.length;i++){
   }
       
 console.log(this.grandtotal)
+if(this.grandtotal == 0){
+  this.presentToast('Please check values before submitting');
   
- this.presentAlertConfirm(c,this.grandtotal);
+}
+else{
+  this.presentAlertConfirm(c,this.grandtotal);
+ 
+}
+  
 
 
 
