@@ -23,6 +23,9 @@ customernames:any=[];
 receiptnum:any=[];
 chitnum:any=[];
 branchname:any=[];
+show:boolean=false;
+history_total:any;
+history_tot:any;
 constructor(public fb: FormBuilder,private toast:Toast,public loadingController: LoadingController, private paymentservice:PaymentService,private router: Router,private route: ActivatedRoute) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -39,23 +42,33 @@ to_date: ['', Validators.required],
 });
 }
 history(){
+	this.receipt_history=[];
 this.present();
 this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("yyyy/MM/DD");
 this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("yyyy/MM/DD");
 this.paymentservice.receipthistory(this.colid,this.receiptFormGroup.value.from_date,this.receiptFormGroup.value.to_date).subscribe(res=>{
 this.dismiss();
+console.log(res)
 if(res['length'] == 0){
+	this.show=false;
 this.presentToast('No data available')
 }
 else{
+	
+	this.show=true;
   this.receipt_history=res;
 this.length=this.receipt_history.length
-for (let i=0;i<this.receipt_history.length;i++){
-	this.customernames.push(this.receipt_history[i].customerName);
-	this.receiptnum.push(this.receipt_history[i].appReceiptno);
-	this.branchname.push(this.receipt_history[i].branchName);
-	this.chitnum.push(this.receipt_history[i].chitNo)
+var num=0;
+for(let i=0;i<this.receipt_history.length;i++){
+	  num+=(parseFloat( this.receipt_history[i].total))
+
+	this.history_total=num;
+	this.history_tot=Number(parseFloat(this.history_total).toFixed(2)).toLocaleString('en', {
+    minimumFractionDigits: 2
+})
+	console.log(this.history_tot)
 }
+
 }
 })
 }

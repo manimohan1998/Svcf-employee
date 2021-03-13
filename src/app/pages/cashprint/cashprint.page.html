@@ -38,7 +38,9 @@
       </h3>
     </ion-col>
     <ion-col size="6">
-      <p>Date: <span>{{p?.datetime |date:'dd/MM/yyyy'}}</span></p>
+      <p>Date: <span>{{p?.datetime |date:'dd/MM/yyyy '}}</span></p>
+      <p>Time: <span>{{p?.datetime |date:' HH:mm a'}}</span></p>
+
     </ion-col>
     </ion-row>
       <div class="receipt_no">
@@ -60,12 +62,12 @@
             <th>Ag No/Year</th>
             <td>:</td>
             <td>{{p?.agreementNo}}</td>
-        <!--   </tr>
+          </tr>
              <tr>
             <th>Current Inst No</th>
             <td>:</td>
             <td>{{p?.currentInstalmentNo}}</td>
-          </tr> -->
+          </tr>
        <!--    <tr>
             <th>Current Due</th>
             <td>:</td>

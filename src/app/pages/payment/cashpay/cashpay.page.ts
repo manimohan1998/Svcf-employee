@@ -21,6 +21,7 @@ new_value: any;
 edit_value: any;
 new_array: any = [];
 cashpdata: any;
+grandtotal1:any;
 nedate: any;
 day: any;
 month: any;
@@ -95,10 +96,15 @@ var o = Object.assign({}, el);
 o.total = +el.amountpayable + +el.interest + +el.otheramount;
 return o;
 })
+console.log(this.result,"res")
 for (let i=0;i<this.result.length;i++){
   num+=(parseFloat( this.result[i].total))
   this.grand_total=num;
+    this.grandtotal1=Number(parseFloat(this.grand_total).toFixed(2)).toLocaleString('en', {
+    minimumFractionDigits: 2
+})
   }
+
   this.post_id= localStorage.getItem('col_id')
   this.nedate = new Date();
   this.day = moment(this.nedate.toLocaleString()).format("DD");
@@ -491,7 +497,7 @@ for (let i=0;i<this.result.length;i++){
   },
   {
   "Amount": this.sampletest[i].amountpayable,
-    "CurrentDue":this.sampletest[i].amountreceived,
+   "CurrentDue":this.sampletest[i].amountreceived,
 
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
@@ -592,14 +598,15 @@ for (let i=0;i<this.result.length;i++){
   }
   }
   this.paymentservice.post_vouchercash(this.cashdata1).subscribe(res => {
-  this.voucher_res = res;
   if (res) {
   this.dismiss();
-  this.second_voucher = res;
+  this.voucher_res = res;
   this.presentToast('sucessfully updated');
-  //alert('sucessfully updated');
-  localStorage.setItem("print_cash", JSON.stringify(this.voucher_res))
-  this.router.navigateByUrl('cashprint');
+   let navigationExtras: NavigationExtras = {
+    queryParams: { state:JSON.stringify(this.voucher_res )},
+    skipLocationChange: true
+    };
+    this.router.navigate(['cashprint'],navigationExtras)
   
   }
   else {
@@ -612,7 +619,10 @@ for (let i=0;i<this.result.length;i++){
   alert('error');
   this.dismiss();
   }
-  })
+  },(error=>{
+    this.dismiss();
+    alert('Server Error')
+  }))
   }
   })
   }

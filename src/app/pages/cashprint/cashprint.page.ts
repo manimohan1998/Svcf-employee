@@ -19,26 +19,23 @@ print_cash_page:any;
 isLoading = false;
 constructor(private platform:Platform,public loadingController: LoadingController,private toast :Toast,public paymentservice:PaymentService,private modalCtrl:ModalController, private alertCtrl:AlertController,private router:Router,private route: ActivatedRoute) {
 }
-// ionViewDidEnter() {
-//   this.platform.backButton.subscribeWithPriority(1, () => {
-//     this.router.navigateByUrl('dashboard')
-//         //navigator['app'].exitApp();
-//  });
 
-onBack(){
-
-}
-// ionViewWillLeave() {
-//   this.backButtonSub.unsubscribe();
-// }
-ngOnInit() {
-this.cash_print_preview=JSON.parse(localStorage.getItem("print_cash"));
+ionViewWillEnter(){
+  this.route.queryParams.subscribe(params => {
+this.cash_print_preview = JSON.parse(params.state)
+console.log(this.cash_print_preview)
 for(let i=0;i<this.cash_print_preview.length;i++){
   this.api_id.push(this.cash_print_preview[i]['ID']);
   }
-  this.paymentservice.print_details(this.api_id).subscribe(res=>{
+   this.paymentservice.print_details(this.api_id).subscribe(res=>{
   this.print_cash_page=res;
   })
+})
+
+}
+
+ngOnInit() {
+
   }
   previous(){
   this.router.navigateByUrl('dashboard')

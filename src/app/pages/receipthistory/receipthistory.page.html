@@ -23,6 +23,11 @@
   <ion-button type="submit" class="btn_right" [disabled]="!receiptFormGroup.valid" (click)="history()">Submit
   </ion-button>
 </form>
+<p *ngIf="show == true" class="total">
+          Total<span>
+          ₹ {{history_tot}}</span>
+        </p>
+
 <!-- <div class="search" *ngIf="length != 0">
     <ion-searchbar placeholder="search" [(ngModel)]="receipt" 
     ></ion-searchbar>
@@ -55,7 +60,9 @@
       </h3>
     </ion-col>
     <ion-col size="6">
-        <p>Date: <span>{{p.paidDate |date:'dd-MM-yyyy'}}</span></p>
+        <p>Date: <span>{{p.paidDate |date:'dd-MM-yyyy '}}</span></p>
+        <p>Time: <span>{{p.paidDate |date:'HH:mm a'}}</span></p>
+
       </ion-col>
               </ion-row>
       <div class="receipt_no">

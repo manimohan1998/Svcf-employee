@@ -32,6 +32,7 @@ index_value:any=[];
 final_total:any;
 grandtotal:any;
 message:any;
+grandtotal1:any;
 constructor(private route: ActivatedRoute,private toast:Toast,public alertController: AlertController, private router: Router, private fb: FormBuilder, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -65,7 +66,7 @@ Object.keys(this.i_details).forEach((i) => {
 this.fb.group({
 branchprefix: new FormControl(this.i_details[i].BranchPrefix, Validators.required),
 branchname: new FormControl(this.i_details[i].Branch, Validators.required),
-groupno: new FormControl(this.i_details[i].chitgroupno, Validators.required),
+groupno: new FormControl(this.i_details[i].groupno, Validators.required),
 totalchit: new FormControl(this.i_details[i].totalchitvalue, Validators.required),
 branchid: new FormControl(this.i_details[i].BranchID, Validators.required),
 memberid: new FormControl(this.i_details[i].Mid, Validators.required),
@@ -153,15 +154,18 @@ return o;
 for (let i=0;i<this.final_total.length;i++){
   num+=(parseFloat( this.final_total[i].total))
   this.grandtotal=num;
+  this.grandtotal1=Number(parseFloat(this.grandtotal).toFixed(2)).toLocaleString('en', {
+    minimumFractionDigits: 2
+})
   }
       
-console.log(this.grandtotal)
+console.log(this.grandtotal1)
 if(this.grandtotal == 0){
   this.presentToast('Please check values before submitting');
   
 }
 else{
-  this.presentAlertConfirm(c,this.grandtotal);
+  this.presentAlertConfirm(c,this.grandtotal1);
  
 }
   

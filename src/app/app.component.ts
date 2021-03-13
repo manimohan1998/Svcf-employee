@@ -114,12 +114,11 @@ export class AppComponent {
     this.alertController.create({
       header: 'App termination',
       message: 'Do you want to close the app?',
-      backdropDismiss: false,
       buttons: [{
-        text: 'Stay',
+        text: 'Cancel',
         role: 'cancel',
         handler: () => {
-          console.log('Application exit prevented!');
+        console.log('Cancel clicked');
         }
       }, {
         text: 'Exit',
