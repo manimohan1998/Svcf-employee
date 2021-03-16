@@ -29,35 +29,35 @@
         <ion-card-content>
         <ion-item>
         <ion-label position="stacked">Current Due</ion-label>
-        <ion-input formControlName="amountreceived" type="number" value="" placeholder="Current Due"
+        <ion-input formControlName="amountreceived"  value="" placeholder="Current Due"
         readonly>
         </ion-input>
         </ion-item>
         <ion-item *ngIf="d?.prizedarrear !=0 ">
         <ion-label position="stacked">Prized Arrear </ion-label>
-        <ion-input formControlName="prizedarrear" type="number" value="" placeholder="Prized Arrear" readonly>
+        <ion-input formControlName="prizedarrear"  value="" placeholder="Prized Arrear" readonly>
         </ion-input>
         </ion-item>
         <ion-item *ngIf="d?.nonprizedarrear !=0">
         <ion-label position="stacked">Non-Prized Arrear</ion-label>
-        <ion-input formControlName="nonprizedarrear" type="number" value="" placeholder="Non-Prized Arrear"
+        <ion-input formControlName="nonprizedarrear"  value="" placeholder="Non-Prized Arrear"
         readonly>
         </ion-input>
         </ion-item>
          <ion-item >
         <ion-label position="stacked">Amount Received</ion-label>
-        <ion-input formControlName="amountpayable" type="number" value="" placeholder="Amount Received"
+        <ion-input formControlName="amountpayable"  value="" placeholder="Amount Received"
         readonly>
         </ion-input>
         </ion-item>
         <ion-item >
         <ion-label position="stacked">Interest</ion-label>
-        <ion-input formControlName="interest" type="number" value="" placeholder="interest" readonly>
+        <ion-input formControlName="interest"  value="" placeholder="interest" readonly>
         </ion-input>
         </ion-item>
         <ion-item>
         <ion-label position="stacked">Other Amount</ion-label>
-        <ion-input formControlName="otheramount" type="number" value="" placeholder="otheramount" readonly>
+        <ion-input formControlName="otheramount"  value="" placeholder="otheramount" readonly>
         </ion-input>
         </ion-item>
         <ion-item>
@@ -69,7 +69,7 @@
         </ion-item>
         <p class="total">
           Total<span>
-          ₹ {{d.total}}</span>
+          ₹ {{d.total1}}</span>
         </p>
         </ion-card-content>
         </ion-card>

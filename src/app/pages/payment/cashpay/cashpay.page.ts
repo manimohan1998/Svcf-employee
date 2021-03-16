@@ -93,7 +93,10 @@ this.voucher_count=res;
 var num=0;
 this.result = this.new_array.map(function(el) {
 var o = Object.assign({}, el);
-o.total = +el.amountpayable + +el.interest + +el.otheramount;
+o.total = +el.amountpayable.replace(/,/g,'') + +el.interest.replace(/,/g,'') + +el.otheramount.replace(/,/g,'');
+o.total1=Number(parseFloat(o.total).toFixed(2)).toLocaleString('en', {
+    minimumFractionDigits: 2
+})
 return o;
 })
 console.log(this.result,"res")
@@ -132,13 +135,13 @@ for (let i=0;i<this.result.length;i++){
   chitgroupid: new FormControl(this.result[i].chitgroupid, Validators.required),
   agreement: new FormControl(this.result[i].agreement, Validators.required),
   installment: new FormControl(this.result[i].installment, Validators.required),
-  amountreceived: new FormControl(Number(this.new_array[i].amountreceived)),
-    amountpayable: new FormControl(Number(this.new_array[i].amountpayable)),
+  amountreceived: new FormControl(this.new_array[i].amountreceived),
+    amountpayable: new FormControl(this.new_array[i].amountpayable),
 
-  prizedarrear: new FormControl(Number(this.new_array[i].prizedarrear)),
-  nonprizedarrear: new FormControl(Number(this.new_array[i].nonprizedarrear)),
-  interest: new FormControl(Number(this.result[i].interest)),
-  otheramount: new FormControl(Number(this.result[i].otheramount)),
+  prizedarrear: new FormControl(this.new_array[i].prizedarrear),
+  nonprizedarrear: new FormControl(this.new_array[i].nonprizedarrear),
+  interest: new FormControl(this.result[i].interest),
+  otheramount: new FormControl(this.result[i].otheramount),
   narration: new FormControl(this.result[i].narration)
   })
   )
@@ -200,6 +203,14 @@ for (let i=0;i<this.result.length;i++){
   }
   }
   for (let i = 0; i < this.sampletest.length; i++) {
+  this.sampletest[i].prizedarrear = this.sampletest[i].prizedarrear.replace(/,/g, '');
+  this.sampletest[i].nonprizedarrear = this.sampletest[i].nonprizedarrear.replace(/,/g, '');
+  this.sampletest[i].amountreceived = this.sampletest[i].amountreceived.replace(/,/g, '');
+  this.sampletest[i].interest= this.sampletest[i].interest.replace(/,/g, '');
+  this.sampletest[i].otheramount= this.sampletest[i].otheramount.replace(/,/g, '');
+  this.sampletest[i].amountpayable= this.sampletest[i].amountpayable.replace(/,/g, '');
+
+console.log(this.sampletest[i].prizedarrear)
   // var strFirstThree = this.sampletest[i].branchprefix.substring(0,3).toUpperCase();;
   var strFirstThree = this.sampletest[i].branchprefix;
   this.voucher_count +=1

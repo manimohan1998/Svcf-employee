@@ -81,13 +81,13 @@ prizedarrear: new FormControl(this.i_details[i].PrizedArrear,Validators.required
 nonprizedarrear: new FormControl(this.i_details[i].NonPrizedArrear,Validators.required),
 interest: new FormControl('', Validators.compose([
 
-Validators.pattern('[. 0-9 ]*')
+Validators.pattern('[. , 0-9 ]*')
 ])),
 otheramount: new FormControl('', Validators.compose([
-Validators.pattern('[. 0-9 ]*')
+Validators.pattern('[. , 0-9 ]*')
 ])),
 amountpayable: new FormControl('', Validators.compose([
-Validators.required,Validators.pattern('^[1-9][0-9]*$')
+Validators.required,Validators.pattern('^[1-9][. , 0-9]*$')
 ])),
 narration: new FormControl('',Validators.required),
 })
@@ -115,10 +115,10 @@ prizedarrear: new FormControl(this.i_details[i].PrizedArrear,Validators.required
 nonprizedarrear: new FormControl(this.i_details[i].NonPrizedArrear,Validators.required),
 interest: new FormControl('', Validators.compose([
 
-Validators.pattern('[. 0-9 ]*')
+Validators.pattern('[. , 0-9 ]*')
 ])),
 otheramount: new FormControl('', Validators.compose([
-Validators.pattern('[. 0-9 ]*')
+Validators.pattern('[. , 0-9 ]*')
 ])),
 amountpayable: new FormControl('', Validators.compose([
 
@@ -145,10 +145,11 @@ console.log(this.cashForm.value.interest)
 submit(c) {
     this.new_check=c.formArrayName;
       console.log(this.new_check)
+
       var num=0;
 this.final_total = this.new_check.map(function(el) {
 var o = Object.assign({}, el);
-o.total = +el.amountpayable + +el.interest + +el.otheramount;
+o.total = +el.amountpayable.replace(/,/g,'') + +el.interest.replace(/,/g,'') + +el.otheramount.replace(/,/g,'');
 return o;
 })
 for (let i=0;i<this.final_total.length;i++){
