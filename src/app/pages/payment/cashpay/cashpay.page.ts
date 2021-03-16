@@ -27,6 +27,7 @@ day: any;
 month: any;
 year: any;
 new10: any;
+sampletest_check:any;
 cashdata: any = [];
 cashdat: any = [];
 sampletest: any;
@@ -101,6 +102,20 @@ return o;
 })
 console.log(this.result,"res")
 for (let i=0;i<this.result.length;i++){
+  if(this.result[i].interest != "" && this.result[i].otheramount == ""){
+    this.result[i].otheramount=0;
+  }
+  else if(this.result[i].otheramount != "" && this.result[i].interest == ""){
+    this.result[i].interest=0;
+  }
+  else if(this.result[i].interest == "" && this.result[i].otheramount== ""){
+    this.result[i].interest=0;
+    this.result[i].otheramount=0;
+  }
+  else if(this.result[i].amountpayable == ""){
+    this.result[i].amountpayable=0;
+
+  }
   num+=(parseFloat( this.result[i].total))
   this.grand_total=num;
     this.grandtotal1=Number(parseFloat(this.grand_total).toFixed(2)).toLocaleString('en', {
@@ -163,7 +178,9 @@ for (let i=0;i<this.result.length;i++){
   submitcash(s) {
   this.present();
   this.sampletest = s.formArrayName;
-  console.log(this.sampletest);
+//  let result = Array.from(this.sampletest_check, o=> Object.fromEntries(<any>Object.entries(o).filter((i) => i[1] != (null || ''))));
+// console.log(result)
+// this.sampletest=result
   this.paymentservice.cash_details(this.sampledata1).subscribe(res => {
   console.log(res);
   this.receipt_res = res;
@@ -203,14 +220,19 @@ for (let i=0;i<this.result.length;i++){
   }
   }
   for (let i = 0; i < this.sampletest.length; i++) {
+   
   this.sampletest[i].prizedarrear = this.sampletest[i].prizedarrear.replace(/,/g, '');
   this.sampletest[i].nonprizedarrear = this.sampletest[i].nonprizedarrear.replace(/,/g, '');
   this.sampletest[i].amountreceived = this.sampletest[i].amountreceived.replace(/,/g, '');
-  this.sampletest[i].interest= this.sampletest[i].interest.replace(/,/g, '');
-  this.sampletest[i].otheramount= this.sampletest[i].otheramount.replace(/,/g, '');
+if(this.sampletest[i].amountpayable != ""){
   this.sampletest[i].amountpayable= this.sampletest[i].amountpayable.replace(/,/g, '');
 
-console.log(this.sampletest[i].prizedarrear)
+}
+else{
+  this.sampletest[i].amountpayable =0;
+}
+console.log(this.sampletest[i].interest)
+
   // var strFirstThree = this.sampletest[i].branchprefix.substring(0,3).toUpperCase();;
   var strFirstThree = this.sampletest[i].branchprefix;
   this.voucher_count +=1
@@ -600,6 +622,7 @@ console.log(this.sampletest[i].prizedarrear)
   ]
   
   }
+  console.log(this.cashpdata)
   this.cashdata.push(this.cashpdata);
   this.cashdata1 = [].concat.apply([], this.cashdata);
   for (let i = this.cashdata1.length - 1; i >= 0; --i) {
