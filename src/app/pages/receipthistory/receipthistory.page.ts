@@ -16,7 +16,7 @@ export class ReceipthistoryPage implements OnInit {
 receiptFormGroup: FormGroup;
 value:any;
 colid:any;
-receipt_history:any;
+receipt_history:any=[];
 length:any;
 isLoading = false;
 customernames:any=[];
@@ -34,7 +34,16 @@ this.value = this.router.getCurrentNavigation().extras.state.user;
 })
 this.colid=localStorage.getItem('col_id')
 }
+ionViewWillEnter(){
+	    this.receiptFormGroup.reset();
+
+	this.receipt_history=[];
+this.show=false;
+}
 ngOnInit() {
+		this.receipt_history=[];
+this.show=false;
+
 this.receiptFormGroup = this.fb.group({
 from_date: ['', Validators.required],
 to_date: ['', Validators.required],
@@ -42,6 +51,7 @@ to_date: ['', Validators.required],
 });
 }
 history(){
+
 	this.receipt_history=[];
 this.present();
 this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("yyyy/MM/DD");
@@ -60,6 +70,8 @@ else{
 this.length=this.receipt_history.length
 var num=0;
 for(let i=0;i<this.receipt_history.length;i++){
+	  this.receipt_history[i].total = this.receipt_history[i].total.replace(/,/g, '');
+
 	  num+=(parseFloat( this.receipt_history[i].total))
 
 	this.history_total=num;
@@ -71,6 +83,7 @@ for(let i=0;i<this.receipt_history.length;i++){
 
 }
 })
+
 }
 async presentToast(message) {
 this.toast.show(message, '2000', 'bottom').subscribe(
