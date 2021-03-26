@@ -377,18 +377,21 @@ ion-label {
               position: absolute;
               top: 10px;
               right: 10px;
-              &.np_status{ 
+              &.red{ 
                 p{
                 font-size: 14px;
                 color: #F00A0A;
               }
               }
-              p {
-                font-size: 14px;
-                // color: #F00A0A;
-                color: #52ad19;;
-                font-weight: 500;
-            }
+              &.green{
+                p {
+                    font-size: 14px;
+                    // color: #F00A0A;
+                    color: #52ad19;;
+                    font-weight: 500;
+                }
+              }
+           
             p{
                 margin: 0;
             }

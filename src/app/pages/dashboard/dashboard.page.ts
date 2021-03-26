@@ -11,13 +11,13 @@ styleUrls: ['./dashboard.page.scss'],
 export class DashboardPage implements OnInit {
 values: any = [];
 searchTerm: string;
-filter: any;
+// filter: any;
 user: any;
-details: any;
+details: any=[];
 moneycoll_id: any;
 moneycoll_name: any;
 login_res_data:any;
-terms:any;
+terms:"";
 items_containers:any;
 isLoading = false;
 

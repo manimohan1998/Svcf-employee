@@ -8,7 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { DashboardPage } from './dashboard.page';
 import { SearchPipe } from '../../shared/search.pipe';
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
+    Ng2SearchPipeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DashboardPage,SearchPipe]

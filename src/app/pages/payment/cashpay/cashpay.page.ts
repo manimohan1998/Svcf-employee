@@ -67,12 +67,16 @@ trigger_sum:any;
 new_name:any;
 voucher_count:any;
 newvoucher_count:any;
+B_Groups: any=[];
 constructor(private fb: FormBuilder,private toast: Toast,private http: HttpClient, public loadingController: LoadingController, private router: Router, private route: ActivatedRoute, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
 this.new = this.router.getCurrentNavigation().extras.state.user6;
 this.new10 = this.router.getCurrentNavigation().extras.state.user10;
+console.log(this.new10)
+this.B_Groups=[]
 for (let i = 0; i < this.new10.length; i++) {
+  this.B_Groups.push(this.new10[i].B_Group)
 this.branch_new = (this.new10[i].BranchID);
 this.head = (this.new10[i].headID);
 this.branch1.push(this.branch_new);
@@ -178,6 +182,7 @@ for (let i=0;i<this.result.length;i++){
   submitcash(s) {
   this.present();
   this.sampletest = s.formArrayName;
+  console.log(this.sampletest)
 //  let result = Array.from(this.sampletest_check, o=> Object.fromEntries(<any>Object.entries(o).filter((i) => i[1] != (null || ''))));
 // console.log(result)
 // this.sampletest=result
@@ -250,7 +255,7 @@ console.log(this.sampletest[i].interest)
   "Amount": this.sampletest[i].amountpayable,
   "PArrear":this.sampletest[i].prizedarrear,
     "CurrentDue":this.sampletest[i].amountreceived,
-
+  "B_Group":this.B_Groups[i],
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
   "ReceievedBy": "admin",
@@ -280,7 +285,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
-
+    "B_Group":this.B_Groups[i],
   "PArrear":this.sampletest[i].prizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -311,6 +316,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
   "Interest":this.sampletest[i].interest,
+  "B_Group":this.B_Groups[i],
   "OtherAmt":this.sampletest[i].otheramount,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -341,6 +347,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
   "Interest":this.sampletest[i].interest,
+  "B_Group":this.B_Groups[i],
   "OtherAmt":this.sampletest[i].otheramount,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -375,6 +382,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": this.sampletest[i].amountpayable,
   "CurrentDue":this.sampletest[i].amountreceived,
+  "B_Group":this.B_Groups[i],
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -405,7 +413,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
-
+    "B_Group":this.B_Groups[i],
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -437,6 +445,7 @@ console.log(this.sampletest[i].interest)
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
   "Interest":this.sampletest[i].interest,
   "OtherAmt":this.sampletest[i].otheramount,
+  "B_Group":this.B_Groups[i],
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
   "ReceievedBy": "admin",
@@ -466,6 +475,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
   "Interest":this.sampletest[i].interest,
+  "B_Group":this.B_Groups[i],
   "OtherAmt":this.sampletest[i].otheramount,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -500,7 +510,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": this.sampletest[i].amountpayable,
     "CurrentDue":this.sampletest[i].amountreceived,
-
+    "B_Group":this.B_Groups[i],
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -531,7 +541,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": this.sampletest[i].amountpayable,
    "CurrentDue":this.sampletest[i].amountreceived,
-
+   "B_Group":this.B_Groups[i],
   "NPArrear":this.sampletest[i].nonprizedarrear,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -562,6 +572,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
   "Interest":this.sampletest[i].interest,
+  "B_Group":this.B_Groups[i],
   "OtherAmt":this.sampletest[i].otheramount,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
@@ -592,6 +603,7 @@ console.log(this.sampletest[i].interest)
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
   "Interest":this.sampletest[i].interest,
+  "B_Group":this.B_Groups[i],
   "OtherAmt":this.sampletest[i].otheramount,
   "IsDeleted": 0,
   "MemberID": this.sampletest[i].memberid,
