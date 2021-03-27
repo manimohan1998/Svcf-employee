@@ -27,6 +27,7 @@ branchname:any=[];
 show:boolean=false;
 history_total:any;
 history_tot:any;
+	show1: boolean;
 constructor(public fb: FormBuilder,private toast:Toast,public loadingController: LoadingController, private paymentservice:PaymentService,private router: Router,private route: ActivatedRoute) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -40,6 +41,7 @@ ionViewWillEnter(){
 
 	this.receipt_history=[];
 this.show=false;
+this.show1=true;
 }
 ngOnInit() {
 		this.receipt_history=[];
@@ -55,17 +57,18 @@ history(){
 
 	this.receipt_history=[];
 this.present();
-this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("DD/MM/YYYY");
-this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("DD/MM/YYYY");
+this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("MM/DD/YYYY");
+this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("MM/DD/YYYY");
 this.paymentservice.receipthistory(this.colid,this.receiptFormGroup.value.from_date,this.receiptFormGroup.value.to_date).subscribe(res=>{
 this.dismiss();
 console.log(res)
 if(res['length'] == 0){
 	this.show=false;
+	this.show1=false;
 this.presentToast('No data available')
 }
 else{
-	
+	this.show1=true;
 	this.show=true;
   this.receipt_history=res;
 this.length=this.receipt_history.length
