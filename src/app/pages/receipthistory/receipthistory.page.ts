@@ -7,6 +7,7 @@ import 'moment/locale/pt-br';
 import { LoadingController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 
+import { MatDateFormats, NativeDateAdapter } from '@angular/material/core';
 @Component({
 selector: 'app-receipthistory',
 templateUrl: './receipthistory.page.html',
@@ -54,8 +55,8 @@ history(){
 
 	this.receipt_history=[];
 this.present();
-this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("yyyy/MM/DD");
-this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("yyyy/MM/DD");
+this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("DD/MM/YYYY");
+this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("DD/MM/YYYY");
 this.paymentservice.receipthistory(this.colid,this.receiptFormGroup.value.from_date,this.receiptFormGroup.value.to_date).subscribe(res=>{
 this.dismiss();
 console.log(res)
@@ -112,3 +113,30 @@ this.isLoading = false;
 return await this.loadingController.dismiss().then(() => console.log('dismissed'));
 }
 }
+
+
+export class AppDateAdapter extends NativeDateAdapter {
+	format(date: Date, displayFormat: Object): any {
+	  if (displayFormat === 'input') {
+		let day: any = date.getDate().toString();
+		day = +day < 10 ? '0' + day : day;
+		let month: any = (date.getMonth() + 1).toString();
+		month = +month < 10 ? '0' + month : month;
+		let year = date.getFullYear();
+		return `${day}-${month}-${year}`;
+	  }
+	  return date.toDateString();
+	}
+  }
+  export const APP_DATE_FORMATS: MatDateFormats = {
+	parse: {
+	  dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+	},
+	display: {
+	  dateInput: 'input',
+	  monthYearLabel: { year: 'numeric', month: 'numeric' },
+	  dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric'
+	  },
+	  monthYearA11yLabel: { year: 'numeric', month: 'long' },
+	}
+  };

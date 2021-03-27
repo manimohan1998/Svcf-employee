@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   entryComponents: [],
   imports: [BrowserModule,MaterialModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,BrowserAnimationsModule],
   providers: [
+   
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

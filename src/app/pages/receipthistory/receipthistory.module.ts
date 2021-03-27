@@ -10,7 +10,8 @@ import { ReceipthistoryPageRoutingModule } from './receipthistory-routing.module
 import { ReceipthistoryPage } from './receipthistory.page';
 import { MaterialModule } from '../../material/material.module';
 import { Toast } from '@ionic-native/toast/ngx';
-
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/pages/receipthistory/receipthistory.page';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,6 +22,8 @@ import { Toast } from '@ionic-native/toast/ngx';
     ReceipthistoryPageRoutingModule
   ],
   declarations: [ReceipthistoryPage],
-  providers:[Toast]
+  providers:[Toast,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},]
 })
 export class ReceipthistoryPageModule {}

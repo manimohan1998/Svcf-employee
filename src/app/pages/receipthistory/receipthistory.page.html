@@ -9,16 +9,16 @@
 <ion-content fullscreen class="svcf_recepit_page svcf_dashboard_page">
 <form [formGroup]="receiptFormGroup" autocomplete="off" class="receipt_form">
   <mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="From Date"  formControlName="from_date"
+  <input matInput [matDatepicker]="picker"  placeholder="From Date"  formControlName="from_date"
   (click)="picker.open()">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
+  <mat-datepicker #picker ></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
-  <input matInput [matDatepicker]="picker1" placeholder="To Date"  formControlName="to_date"
+  <input matInput [matDatepicker]="picker1"  placeholder="To Date"  formControlName="to_date"
   (click)="picker1.open()">
   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-  <mat-datepicker #picker1></mat-datepicker>
+  <mat-datepicker #picker1 ></mat-datepicker>
   </mat-form-field>
   <ion-button type="submit" class="btn_right" [disabled]="!receiptFormGroup.valid" (click)="history()">Submit
   </ion-button>
@@ -36,21 +36,26 @@
   <div *ngFor="let p of receipt_history" class="history_card">
     <ion-card class="card_bg">
     <ion-card-content>
-    <div class="ofz_img">
+    <!-- <div class="ofz_img">
       <img src="../../../assets/images/img.png">
       <div class="branch_name">
         <p>Branch Name:<span>{{p.branchName}}</span></p>
         <p>Form No: <span>XVI</span></p>
       </div>
-    </div>
+    </div> -->
     <div class="logo">
-      <img src="../../../assets/images/logo.png">
+      <ion-item>
+        <img src="../../../assets/images/logo.png">
+      <p slot="end">Form No: <span>XVI</span></p>
+      </ion-item>
+      
     </div>
     <div class="ofz_address">
       <h1>SREE VISALAM CHIT FUND LTD.</h1>
       <p>Registered Office: Tirunelveli - 6</p>
       <p>(See Section 23 and Rule 25) </p>
       <p>Receipt issued under the chit funds Act 1982</p>
+      <p>Branch Name:<span>{{p.branchName}}</span></p>
     </div>
     <div class="receipt_content">
       <ion-row size="12">
@@ -98,7 +103,7 @@
             <td>{{p.currentInstno}}</td>
           </tr> -->
           <tr>
-            <th>Paid Installment No</th>
+            <th>Installment No</th>
             <td>:</td>
             <td>{{p.paidInstmentNo===''?'---':p.paidInstmentNo}}</td>
           </tr>
