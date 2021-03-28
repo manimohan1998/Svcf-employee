@@ -1,5 +1,5 @@
 <ion-header>
-<ion-toolbar>
+<ion-toolbar style="--min-height:0px !important">
 <ion-item>
 <ion-icon name="arrow-back-outline" (click)="previous()"></ion-icon>
 <ion-title>Receipt</ion-title>
@@ -41,7 +41,7 @@
       <p>Registered Office: Tirunelveli - 6</p>
       <p>(See Section 23 and Rule 25) </p>
       <p>Receipt issued under the chit funds Act 1982</p>
-      <p><b>Branch Name:<span>{{p.branchName}}</span></b></p>
+      <p><b>Branch Name: <span>{{p.branchName}}</span></b></p>
     </div>
     <div class="receipt_content">
       <ion-row size="12">
@@ -66,30 +66,30 @@
             <td>:</td>
             <td>{{p?.customerName}}</td>
           </tr>
+           <tr>
+            <th>Ag. No/Year</th>
+            <td>:</td>
+            <td>{{p?.agreementNo}}</td>
+          </tr>
           <tr>
             <th>Chit No</th>
             <td>:</td>
             <td>{{p?.chitNo}}</td>
-          </tr>
-           <tr>
-            <th>Ag No/Year</th>
-            <td>:</td>
-            <td>{{p?.agreementNo}}</td>
           </tr>
              <!-- <tr>
             <th>Current Inst No</th>
             <td>:</td>
             <td>{{p?.currentInstalmentNo}}</td>
           </tr> -->
+         <tr>
+            <th>Installment No</th>
+            <td>:</td>
+            <td>{{p.paidInstmentNo===''?'0.00':p.paidInstmentNo}}</td>
+          </tr>
           <tr>
             <th>Amount Received</th>
             <td>:</td>
             <td>{{p.amount===''?'0.00':p.amount}}</td>
-          </tr>
-             <tr>
-            <th>Installment No</th>
-            <td>:</td>
-            <td>{{p.paidInstmentNo===''?'0.00':p.paidInstmentNo}}</td>
           </tr>
        <!--    <tr>
             <th>Current Due</th>

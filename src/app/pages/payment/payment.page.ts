@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router,NavigationExtras } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
 import { environment } from '../../../environments/environment';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 @Component({
 selector: 'app-payment',
 templateUrl: './payment.page.html',
@@ -33,7 +33,8 @@ arrayprized: any[]=[];
 prized_chits: any[]=[];
 imageUrl:any;
 profile:any;
-constructor(private route: ActivatedRoute,public alertController: AlertController, private router: Router,public paymentservice:PaymentService) {
+constructor(private route: ActivatedRoute,public alertController: AlertController, private router: Router,public paymentservice:PaymentService,
+  public toastController: ToastController) {
 
 }
 ionViewWillEnter() {
@@ -105,14 +106,14 @@ for (let i=0;i<this.payee_details.length;i++){
     skipLocationChange: true
     };
     this.router.navigate(['payment/cash'],navigationExtras)
-    }else return alert("Must choose atleast 1 Prized Chit")
+    }else return this.presentToast("Must choose atleast 1 Prized Chit");
     }else if(this.arrayvalue.length ==2){
     for(let i=0;i<this.arrayvalue.length;i++){
       if(this.arrayvalue[i].isprized=="Prized"){
       this.arrayprized.push(this.arrayvalue[i])
       }
       }
-      if(this.arrayprized.length==0) return alert("Choose atleast 1 prized chits")
+      if(this.arrayprized.length==0) return this.presentToast("Choose atleast 1 prized chits")
       else{
       let data = JSON.stringify(this.arrayvalue)
       let navigationExtras: NavigationExtras = {
@@ -136,7 +137,7 @@ for (let i=0;i<this.payee_details.length;i++){
         }
         }
         if(this.arrayprized.length <2){
-        return alert("Choose atleast 2 prized chits")
+        return this.presentToast("Choose atleast 2 prized chits")
         }else{
         let data = JSON.stringify(this.arrayvalue)
         let navigationExtras: NavigationExtras = {
@@ -155,7 +156,7 @@ for (let i=0;i<this.payee_details.length;i++){
         };
         this.router.navigate(['payment/cash'],navigationExtras)
         }
-        }else return alert("Please choose atleast one chit")
+        }else return this.presentToast("Please choose atleast one chit")
         }
         logout(){
         this.presentAlertConfirm();
@@ -185,5 +186,14 @@ for (let i=0;i<this.payee_details.length;i++){
         });
         await alert.present();
         }
+
+        async presentToast(message) {
+          const toast = await this.toastController.create({
+              message: message,
+              duration: 2000
+           });
+            toast.present();
+        }
+        
         
         }

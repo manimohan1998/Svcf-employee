@@ -50,20 +50,20 @@
                     </ion-item>
                     <ion-item >
                      <ion-label position="stacked">Amount Received</ion-label>
-                    <ion-input formControlName="amountpayable" value=""
+                    <ion-input (keypress)="CheckSpace($event)" formControlName="amountpayable" value=""
                     placeholder="Amount Received"   >
                     </ion-input>
                     </ion-item>
                     <ion-item >
                     <ion-label position="stacked">Interest</ion-label>
-                    <ion-input formControlName="interest"   value="" placeholder="Interest" 
+                    <ion-input (keypress)="CheckSpace($event)" formControlName="interest"   value="" placeholder="Interest" 
                     >
                     </ion-input>
                     </ion-item>
                     <ion-item>
                     <ion-label position="stacked">Other Amount</ion-label>
-                    <ion-input formControlName="otheramount"  value=""
-                    placeholder="Otheramount">
+                    <ion-input (keypress)="CheckSpace($event)" formControlName="otheramount"  value=""
+                    placeholder="Other Amount">
                     </ion-input>
                     </ion-item>
                     <ion-item>

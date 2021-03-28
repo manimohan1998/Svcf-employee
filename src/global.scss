@@ -443,7 +443,7 @@ ion-label {
                 border-radius: 15px;
                      }
                      span{
-                        background: #34a21485;
+                        background: #ffa805d2;
                         padding: 5px 10px;
                         margin-left: 6px;
                         border-radius: 5px;
@@ -460,7 +460,7 @@ ion-label {
     font-size: 16px;
         font-weight:bold;
 
-                    span{
+                    .span{
                         padding: 7px 14px;
                 background: linear-gradient(to right, #677DE1 0%, #A1B0F0 100%);
                 border-radius: 5px;
@@ -468,6 +468,16 @@ ion-label {
                 color: #fff;
 
                     }
+                }
+                .total1{
+                    
+                        padding: 7px 14px;
+                background: linear-gradient(to right, #677DE1 0%, #A1B0F0 100%);
+                border-radius: 5px;
+                margin-left: 10px;
+                color: #fff;
+
+                    
                 }
                
                 

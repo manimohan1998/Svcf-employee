@@ -1,5 +1,5 @@
 <ion-header>
-<ion-toolbar>
+<ion-toolbar style="--min-height:0px !important">
 <ion-item>
 <ion-icon name="arrow-back-outline" (click)="previous()"></ion-icon>
 <ion-title>Receipt History</ion-title>
@@ -74,7 +74,7 @@
       <p>Registered Office: Tirunelveli - 6</p>
       <p>(See Section 23 and Rule 25) </p>
       <p>Receipt issued under the chit funds Act 1982</p>
-      <p><b>Branch Name:<span>{{p.branchName}}</span></b></p>
+      <p><b>Branch Name: <span>{{p.branchName}}</span></b></p>
     </div>
     <div class="receipt_content">
       <ion-row size="12">
@@ -97,24 +97,25 @@
       <table class="table receipt_amts">
         <tbody>
           <tr>
-            <th>Customer Name</th>
+            <th>Received From</th>
             <td>:</td>
             <td>{{p.customerName}}</td>
           </tr>
-          <tr>
+          <!-- <tr>
             <th>Branch Name</th>
             <td>:</td>
             <td>{{p.branchName}}</td>
+          </tr> -->
+         
+          <tr>
+            <th>Ag. No/Year</th>
+            <td>:</td>
+            <td>{{p.chitAgreementno}}</td>
           </tr>
           <tr>
             <th>Chit No</th>
             <td>:</td>
             <td>{{p.chitNo}}</td>
-          </tr>
-          <tr>
-            <th>Chit Agreement No</th>
-            <td>:</td>
-            <td>{{p.chitAgreementno}}</td>
           </tr>
           <!-- <tr>
             <th>Chit Installment No</th>
@@ -168,5 +169,5 @@
     </ion-card>
   </div>
 </section>
-<div style="height: 250px;text-align: center;margin-top: 50%;" *ngIf="this.show1==false;">No Receipts found </div>
+<div style="height: 250px;text-align: center;margin-top: 50%;" *ngIf="this.show1==false;">No Receipts Found </div>
 </ion-content>

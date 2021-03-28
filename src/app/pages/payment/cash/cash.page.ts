@@ -234,4 +234,13 @@ localStorage.clear();
 await alert.present();
 }
 
+CheckSpace(event)
+{
+   if(event.which ==32)
+   {
+      event.preventDefault();
+      return false;
+   }
+}
+
 }
