@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DashboardService } from '../../services/dashboard.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { NavController,ModalController,AlertController, Platform } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
 selector: 'app-dashboard',
 templateUrl: './dashboard.page.html',
@@ -22,7 +23,8 @@ items_containers:any;
 isLoading = false;
 
    filterItems:any;
-constructor(private platform:Platform,private router: Router,public alertController: AlertController,  public dashboardservice: DashboardService, private route: ActivatedRoute,public loadingController: LoadingController) {
+constructor(private platform:Platform,private router: Router,public alertController: AlertController,  public dashboardservice: DashboardService, private route: ActivatedRoute,public loadingController: LoadingController,
+   public toastController: ToastController) {
 
 }
 ionViewDidEnter() {
@@ -35,13 +37,21 @@ ngOnInit() {
 ionViewWillEnter(){
 this.moneycoll_name=localStorage.getItem("col_name")
 this.moneycoll_id = localStorage.getItem("col_id");
+let token=localStorage.getItem("tokens");
 this.present();
-this.dashboardservice.user_details(this.moneycoll_id).subscribe(res => {
+this.dashboardservice.user_details(this.moneycoll_id,token).subscribe(res => {
 this.dismiss();
 this.details = res;
  this.filterItems= this.details;
 
-})
+},(error:HttpErrorResponse)=>{
+   if(error.status===401){    
+      this.dismiss();       
+     this.presentToast("Session timeout please login continue");
+     this.router.navigate(["/login"]);
+  }
+
+ })
 }
 goto(s) {
 this.user = s;
@@ -96,5 +106,12 @@ this.router.navigate(['receipthistory']);
 //  searching(){
 // this.filterItems = this.details.filter(item =>  item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase())) > -1;
 
-//  }    
+//  }   
+async presentToast(message) {
+   const toast = await this.toastController.create({
+       message: message,
+       duration: 2000
+    });
+     toast.present();
+ } 
 }

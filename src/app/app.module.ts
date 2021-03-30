@@ -8,16 +8,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MaterialModule } from  './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {Interceptor} from '../app/core/interceptor';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule,MaterialModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,BrowserAnimationsModule],
   providers: [
-   
+    Interceptor,
+    { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

@@ -8,8 +8,8 @@ import { environment } from '../../environments/environment';
 export class DashboardService {
 
   constructor(private http: HttpClient) { }
-  user_details(mem_id){
-    return this.http.get(environment.Baseurl+'membertogroupmasterMid/MId?Mid='+mem_id);
+  user_details(mem_id,token){
+    return this.http.get('membertogroupmasterMid/MId?Mid='+mem_id+'&Token='+token);
 
   }
 }
