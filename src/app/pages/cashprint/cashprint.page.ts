@@ -4,6 +4,7 @@ import { NavController,ModalController,AlertController, Platform } from '@ionic/
 import { PaymentService } from '../../services/payment.service';
 import { LoadingController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 selector: 'app-cashprint',
@@ -21,17 +22,31 @@ constructor(private platform:Platform,public loadingController: LoadingControlle
 }
 
 ionViewWillEnter(){
+  let token=localStorage.getItem("tokens");
   this.route.queryParams.subscribe(params => {
 this.cash_print_preview = JSON.parse(params.state)
 console.log(this.cash_print_preview)
 for(let i=0;i<this.cash_print_preview.length;i++){
   this.api_id.push(this.cash_print_preview[i]['ID']);
   }
-   this.paymentservice.print_details(this.api_id).subscribe(res=>{
+   this.paymentservice.print_details(this.api_id,token).subscribe(res=>{
     console.log(res)
   this.print_cash_page=res;
  
-  })
+  }
+  ,(error:HttpErrorResponse)=>{
+    if(error.status ===401){           
+      this.presentToast("Session timeout, please login to continue.");
+      this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){           
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+ }
+ 
+  }
+  
+  )
 })
 
 }

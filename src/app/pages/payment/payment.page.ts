@@ -3,6 +3,7 @@ import { ActivatedRoute,Router,NavigationExtras } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
 import { environment } from '../../../environments/environment';
 import { AlertController, ToastController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
 selector: 'app-payment',
 templateUrl: './payment.page.html',
@@ -43,7 +44,8 @@ this.arrayvalue=[];
 this.newarr=[];
 this.pushvalue=[];
 this.user_details=JSON.parse(localStorage.getItem("user2"));
-this.paymentservice.payment_details(this.user_details.MemberID).subscribe(res =>{
+let token=localStorage.getItem("tokens");
+this.paymentservice.payment_details(this.user_details.MemberID,token).subscribe(res =>{
 this.payee_details=res;
 for (let i=0;i<this.payee_details.length;i++){
   this.status=this.payee_details[i].status;
@@ -69,7 +71,22 @@ for (let i=0;i<this.payee_details.length;i++){
   this.payee_details[i].isprized='Prized';
   }
   }
-  })
+  }
+  ,(error:HttpErrorResponse)=>{
+    if(error.status ===401){          
+      this.presentToast("Session timeout, please login to continue.");
+      this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){           
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+ }
+ 
+  }
+  
+  
+  
+  )
   }
   ngOnInit() {
   }

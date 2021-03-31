@@ -5,7 +5,7 @@ import { PaymentService } from '../../../services/payment.service';
 import 'moment/locale/pt-br';
 import * as moment from 'moment';
 import { LoadingController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Toast } from '@ionic-native/toast/ngx';
 @Component({
 selector: 'app-payment',
@@ -92,8 +92,21 @@ this.new_array = this.new;
 })
 }
 ngOnInit() {
-this.paymentservice.receiptseries('BCAPP').subscribe(res=>{
+  let token=localStorage.getItem("tokens");
+this.paymentservice.receiptseries('BCAPP',token).subscribe(res=>{
 this.voucher_count=res;
+},(error:HttpErrorResponse)=>{
+  if(error.status ===401){    
+     this.dismiss();       
+    this.presentToast("Session timeout, please login to continue.");
+    this.router.navigate(["/login"]);
+ }
+ else if(error.status ===400){    
+  this.dismiss();       
+  this.presentToast("Server Error! Please try login again.");
+  this.router.navigate(["/login"]);
+}
+
 })
 var num=0;
 this.result = this.new_array.map(function(el) {
@@ -186,7 +199,8 @@ for (let i=0;i<this.result.length;i++){
 //  let result = Array.from(this.sampletest_check, o=> Object.fromEntries(<any>Object.entries(o).filter((i) => i[1] != (null || ''))));
 // console.log(result)
 // this.sampletest=result
-  this.paymentservice.cash_details(this.sampledata1).subscribe(res => {
+  let token=localStorage.getItem("tokens");
+  this.paymentservice.cash_details(this.sampledata1,token).subscribe(res => {
   console.log(res);
   this.receipt_res = res;
   if (this.receipt_res != null) {
@@ -214,7 +228,7 @@ for (let i=0;i<this.result.length;i++){
   this.ReceiptTable1.push(this.ReceiptTable);
   console.log(this.ReceiptTable1);
   }
-  this.paymentservice.receipt_update(this.ReceiptTable1).subscribe(res => {
+  this.paymentservice.receipt_update(this.ReceiptTable1,token).subscribe(res => {
   console.log(res);
   this.res_status = res;
   console.log(this.res_status)
@@ -643,7 +657,7 @@ console.log(this.sampletest[i].interest)
   }
   }
   }
-  this.paymentservice.post_vouchercash(this.cashdata1).subscribe(res => {
+  this.paymentservice.post_vouchercash(this.cashdata1,token).subscribe(res => {
   if (res) {
   this.dismiss();
   this.voucher_res = res;
@@ -659,18 +673,61 @@ console.log(this.sampletest[i].interest)
   alert('voucher error');
   this.dismiss();
   }
-  });
+  }
+
+  ,(error:HttpErrorResponse)=>{
+    if(error.status ===401){    
+       this.dismiss();       
+      this.presentToast("Session timeout, please login to continue.");
+      this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){    
+    this.dismiss();       
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+ }
+  }
+  
+  );
   }
   else {
   alert('error');
   this.dismiss();
   }
-  },(error=>{
-    this.dismiss();
-    alert('Server Error')
-  }))
   }
-  })
+    ,(error:HttpErrorResponse)=>{
+  if(error.status ===401){    
+     this.dismiss();       
+    this.presentToast("Session timeout, please login to continue.");
+    this.router.navigate(["/login"]);
+ }
+ else if(error.status ===400){   
+  this.dismiss();        
+  this.presentToast("Server Error! Please try login again.");
+  this.router.navigate(["/login"]);
+}
+ else{
+   this.dismiss();
+   alert('server error');
+ }
+
+})
+  }
+  }
+  ,(error:HttpErrorResponse)=>{
+    if(error.status ===401){    
+       this.dismiss();       
+      this.presentToast("Session timeout, please login to continue.");
+      this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){
+    this.dismiss();           
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+ }
+  }
+  
+  )
   }
   logout() {
   this.router.navigateByUrl('login');

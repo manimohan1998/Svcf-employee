@@ -45,12 +45,16 @@ this.details = res;
  this.filterItems= this.details;
 
 },(error:HttpErrorResponse)=>{
-   if(error.status===401){    
+   if(error.status ===401){    
       this.dismiss();       
-     this.presentToast("Session timeout please login continue");
+     this.presentToast("Session timeout, please login to continue.");
      this.router.navigate(["/login"]);
   }
-
+  else if(error.status ===400){  
+   this.dismiss();         
+   this.presentToast("Server Error! Please try login again.");
+   this.router.navigate(["/login"]);
+}
  })
 }
 goto(s) {

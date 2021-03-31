@@ -58,7 +58,6 @@ this.loginservice.user_authentication(this.username, this.password).subscribe(re
     }
     else{
         this.dismiss();
-        this.presentToast('You have Logged in successfully');
         this.user_details = res;
         console.log(res)
         localStorage.setItem("tokens",this.user_details[0].JWTtoken)
@@ -74,6 +73,7 @@ this.loginservice.user_authentication(this.username, this.password).subscribe(re
         user1: this.coll_name
         }
         };
+        this.presentToast('You have Logged in successfully');
         this.router.navigate(['dashboard'], navigationExtras);
     }
 

@@ -8,6 +8,7 @@ import { LoadingController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 
 import { MatDateFormats, NativeDateAdapter } from '@angular/material/core';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
 selector: 'app-receipthistory',
 templateUrl: './receipthistory.page.html',
@@ -57,9 +58,10 @@ history(){
 
 	this.receipt_history=[];
 this.present();
+let token=localStorage.getItem("tokens");
 this.receiptFormGroup.value["from_date"] = moment(this.receiptFormGroup.value.from_date.toLocaleString()).format("MM/DD/YYYY");
 this.receiptFormGroup.value["to_date"] = moment(this.receiptFormGroup.value.to_date.toLocaleString()).format("MM/DD/YYYY");
-this.paymentservice.receipthistory(this.colid,this.receiptFormGroup.value.from_date,this.receiptFormGroup.value.to_date).subscribe(res=>{
+this.paymentservice.receipthistory(this.colid,this.receiptFormGroup.value.from_date,this.receiptFormGroup.value.to_date,token).subscribe(res=>{
 this.dismiss();
 console.log(res)
 if(res['length'] == 0){
@@ -84,9 +86,20 @@ for(let i=0;i<this.receipt_history.length;i++){
 })
 	console.log(this.history_tot)
 }
-
 }
-})
+},(error:HttpErrorResponse)=>{
+	if(error.status ===401){    
+	   this.dismiss();       
+	  this.presentToast("Session timeout, please login to continue.");
+	  this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){   
+	this.dismiss();        
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+ }
+ 
+  } )
 
 }
 async presentToast(message) {

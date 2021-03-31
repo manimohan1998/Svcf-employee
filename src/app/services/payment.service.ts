@@ -7,34 +7,36 @@ import { environment } from '../../environments/environment';
 export class PaymentService {
 
   constructor(private http: HttpClient) { }
-  payment_details(m_id){
-    return this.http.get(environment.Baseurl+'chitdetails/Mid?Mid='+m_id);
+
+  // https://emp.sreevisalam.com/SVCF_Service/Service1.svc/VoucherCreditDebit/AddList?token=
+  payment_details(m_id,token){
+    return this.http.get('chitdetails/Mid?Mid='+m_id+'&Token='+token);
 }
-cash_details(branch){
-  return this.http.post(environment.Baseurl+'ReceiptTable/AddList',branch)
+cash_details(branch,token){
+  return this.http.post('ReceiptTable/AddList?token='+token,branch)
 }
-post_vouchercash(cashvoucher){
-  return this.http.post(environment.Baseurl+'VoucherCreditDebit/AddList',cashvoucher)
+post_vouchercash(cashvoucher,token){
+  return this.http.post('VoucherCreditDebit/AddList?token='+token,cashvoucher)
 
 }
-post_defaultvouchercash(defaultvoucher){
-  return this.http.post(environment.Baseurl+'DefaultCreditDebit/AddList',defaultvoucher)
+post_defaultvouchercash(defaultvoucher,token){
+  return this.http.post('DefaultCreditDebit/AddList?token='+token,defaultvoucher)
 
 }
-receipt_update(return_value){
-  return this.http.post(environment.Baseurl+'ReceiptTable/Update',return_value)
+receipt_update(return_value,token){
+  return this.http.post('ReceiptTable/Update?token='+token,return_value)
 
 }
 
-print_details(print_id){
-  return this.http.get(environment.Baseurl+'AppVoucherPrint/AppReceiptno?AppReceiptno='+print_id,)
+print_details(print_id,token){
+  return this.http.get('AppVoucherPrint/AppReceiptno?AppReceiptno='+print_id+'&Token='+token)
 
 }
-receiptseries(series){
-	return this.http.get(environment.Baseurl+'ReceiptNo/Series?Series='+series)
+receiptseries(series,token){
+	return this.http.get('ReceiptNo/Series?Series='+series+'&Token='+token)
 }
-receipthistory(mid,fromdate,todate){
-  return this.http.get(environment.Baseurl+'VoucherHistory/Mid?Mid='+mid +'&&FromDate='+fromdate+'&&ToDate='+todate)
+receipthistory(mid,fromdate,todate,token){
+  return this.http.get('VoucherHistory/Mid?Mid='+mid +'&&FromDate='+fromdate+'&&ToDate='+todate+'&Token='+token)
 }
 
 }
