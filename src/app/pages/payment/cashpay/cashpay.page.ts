@@ -68,6 +68,8 @@ new_name:any;
 voucher_count:any;
 newvoucher_count:any;
 B_Groups: any=[];
+  arraydata: any=[];
+  Receipt_code: any;
 constructor(private fb: FormBuilder,private toast: Toast,private http: HttpClient, public loadingController: LoadingController, private router: Router, private route: ActivatedRoute, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -92,9 +94,35 @@ this.new_array = this.new;
 })
 }
 ngOnInit() {
-  let token=localStorage.getItem("tokens");
+
+
+  function colName(n) {
+    var ordA = 'a'.charCodeAt(0);
+    var ordZ = 'z'.charCodeAt(0);
+    var len = ordZ - ordA + 1;
+  
+    var s = "";
+    while(n >= 0) {
+        s = String.fromCharCode(n % len + ordA) + s;
+        n = Math.floor(n / len) - 1;
+    }
+    return s;
+  }
+  
+  // Example:
+  this.arraydata=[]
+  for(let n = 0; n < 18278; n++){
+    var val=  colName(n)
+    this.arraydata.push(val)
+  }
+  console.log(this.arraydata)
+
+
+
+ let token=localStorage.getItem("tokens");
 this.paymentservice.receiptseries('BCAPP',token).subscribe(res=>{
 this.voucher_count=res;
+console.log(this.voucher_count)
 },(error:HttpErrorResponse)=>{
   if(error.status ===401){    
      this.dismiss();       
@@ -108,6 +136,22 @@ this.voucher_count=res;
 }
 
 })
+this.paymentservice.receiptseries1('BCAPP',token).subscribe(res=>{
+  this.Receipt_code=res;
+  console.log(this.Receipt_code)
+  },(error:HttpErrorResponse)=>{
+    if(error.status ===401){    
+       this.dismiss();       
+      this.presentToast("Session timeout, please login to continue.");
+      this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){    
+    this.dismiss();       
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+  }
+  
+  })
 var num=0;
 this.result = this.new_array.map(function(el) {
 var o = Object.assign({}, el);
@@ -255,13 +299,19 @@ console.log(this.sampletest[i].interest)
   // var strFirstThree = this.sampletest[i].branchprefix.substring(0,3).toUpperCase();;
   var strFirstThree = this.sampletest[i].branchprefix;
   this.voucher_count +=1
-  let number=this.padLeadingZeros(this.voucher_count, 8);
+
+  if(this.voucher_count>9999999){
+    this.voucher_count=1;
+    this.Receipt_code +=1
+}
+  let number=this.padLeadingZeros(this.voucher_count, 7);
   this.newvoucher_count=number;
   console.log(this.newvoucher_count,"dashb")
   this.new_name=strFirstThree;
   //this.voucher_count=this.voucher_count+1;
   console.log(this.trigger,"trigg")
-  this.receipt_name='B' + '-'+ this.new_name+localStorage.getItem('col_id')+ this.newvoucher_count;
+  let receiptcount=this.arraydata[this.Receipt_code].toUpperCase()
+  this.receipt_name='B' + '-'+ this.new_name+localStorage.getItem('col_id')+'-'+receiptcount+ this.newvoucher_count;
   console.log(this.receipt_name,"rec")
   if(this.sampletest[i].prizedarrear !=0 ){
   this.cashpdata = [
@@ -294,7 +344,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": this.sampletest[i].amountpayable,
@@ -325,7 +376,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -356,7 +408,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -387,7 +440,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   }
   ]
   }
@@ -422,7 +476,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": this.sampletest[i].amountpayable,
@@ -453,7 +508,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -484,7 +540,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -515,7 +572,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   }
   ]
   }
@@ -550,7 +608,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": this.sampletest[i].amountpayable,
@@ -581,7 +640,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "Cash",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -612,7 +672,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   },
   {
   "Amount": +this.sampletest[i].interest + +this.sampletest[i].otheramount,
@@ -643,7 +704,8 @@ console.log(this.sampletest[i].interest)
   "M_Id": this.sampletest[i].m_id,
   "Type": "DefaultInterest",
   "MoneyCollId":this.post_id,
-  "VoucherCount":this.newvoucher_count
+  "VoucherCount":this.newvoucher_count,
+  "VoucherCode":this.Receipt_code
   }
   ]
   

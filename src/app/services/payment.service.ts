@@ -35,6 +35,9 @@ print_details(print_id,token){
 receiptseries(series,token){
 	return this.http.get('ReceiptNo/Series?Series='+series+'&Token='+token)
 }
+receiptseries1(series,token){
+	return this.http.get('AppVoucherCode/Series?Series='+series+'&Token='+token)
+}
 receipthistory(mid,fromdate,todate,token){
   return this.http.get('VoucherHistory/Mid?Mid='+mid +'&&FromDate='+fromdate+'&&ToDate='+todate+'&Token='+token)
 }
