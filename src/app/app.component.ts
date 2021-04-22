@@ -99,14 +99,20 @@ export class AppComponent {
     });
 
     this.platform.backButton.subscribeWithPriority(5, () => {
-      console.log('Handler called to force close!');
-      this.alertController.getTop().then(r => {
-        if (r) {
-          navigator['app'].exitApp();
-        }
-      }).catch(e => {
-        console.log(e);
-      })
+      if (this._location.isCurrentPathEqualTo('/cashprint')) {
+        this.router.navigateByUrl('dashboard')
+      }
+       else{
+         console.log('Handler called to force close!');
+        this.alertController.getTop().then(r => {
+          if (r) {
+            navigator['app'].exitApp();
+          }
+        }).catch(e => {
+          console.log(e);
+        })
+      }
+     
     });
 
   }

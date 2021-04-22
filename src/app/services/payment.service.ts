@@ -41,5 +41,8 @@ receiptseries1(series,token){
 receipthistory(mid,fromdate,todate,token){
   return this.http.get('VoucherHistory/Mid?Mid='+mid +'&&FromDate='+fromdate+'&&ToDate='+todate+'&Token='+token)
 }
+toddayamount(id,token){
+  return this.http.get('TotalPaidToday/MemberId?MemberId='+id+'&token='+token)
+}
 
 }

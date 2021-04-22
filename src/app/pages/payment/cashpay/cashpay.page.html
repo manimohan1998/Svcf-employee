@@ -60,13 +60,13 @@
         <ion-input formControlName="otheramount"  value="" placeholder="otheramount" readonly>
         </ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
         <ion-label position="stacked">
         Write Narrations
         </ion-label>
         <ion-input formControlName="narration" type="text" value="" placeholder="narration" readonly>
         </ion-input>
-        </ion-item>
+        </ion-item> -->
       <div class="total">
           <span> Total</span><span class="total1">
             ₹ {{d.total1}}</span>
@@ -83,7 +83,7 @@
   </form>
   <p class="grand_total">Grand Total<span>₹ {{grandtotal1}}</span>
 </p>
-<ion-button type="submit" expand="block" (click)="submitcash(submitForm.value)" class="btn">Submit </ion-button>
+<ion-button type="submit" expand="block" (click)="submitfunction(submitForm.value)" class="btn">Submit </ion-button>
 </div>
 </ion-content>
 <!-- <ion-content class="cash-content">

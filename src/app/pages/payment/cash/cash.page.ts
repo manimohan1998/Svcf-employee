@@ -89,7 +89,7 @@ Validators.pattern('[. , 0-9 ]*')
 amountpayable: new FormControl('', Validators.compose([
 Validators.required,Validators.pattern('^[1-9][. , 0-9]*$')
 ])),
-narration: new FormControl('',Validators.required),
+// narration: new FormControl('',Validators.required),
 })
 
 )
@@ -123,7 +123,7 @@ Validators.pattern('[. , 0-9 ]*')
 amountpayable: new FormControl('', Validators.compose([
 
 ])),
-narration: new FormControl('',Validators.required),
+// narration: new FormControl('',Validators.required),
 })
 
 )
@@ -204,6 +204,7 @@ user6: this.cash_array,
 user10: this.i_details
 }
 };
+localStorage.setItem("totalamounts",this.grandtotal1)
 this.router.navigate(['payment/cashpay'], navigationExtras);
 }
 }

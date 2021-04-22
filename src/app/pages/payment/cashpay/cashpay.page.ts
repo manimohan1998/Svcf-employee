@@ -70,6 +70,10 @@ newvoucher_count:any;
 B_Groups: any=[];
   arraydata: any=[];
   Receipt_code: any;
+  todaypaidamount: any;
+  totals: number;
+  todayvalue: any;
+  userdata: any=[];
 constructor(private fb: FormBuilder,private toast: Toast,private http: HttpClient, public loadingController: LoadingController, private router: Router, private route: ActivatedRoute, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -218,7 +222,7 @@ for (let i=0;i<this.result.length;i++){
   nonprizedarrear: new FormControl(this.new_array[i].nonprizedarrear),
   interest: new FormControl(this.result[i].interest),
   otheramount: new FormControl(this.result[i].otheramount),
-  narration: new FormControl(this.result[i].narration)
+  // narration: new FormControl(this.result[i].narration)
   })
   )
   })
@@ -236,7 +240,46 @@ for (let i=0;i<this.result.length;i++){
   };
   this.router.navigate(['payment/cash'], navigationExtras);
   }
-  submitcash(s) {
+
+
+submitfunction(s){
+  let token=localStorage.getItem("tokens");
+  this.userdata=JSON.parse(localStorage.getItem("user2"))
+  let id=this.userdata["MemberID"]
+  
+  this.totals=0;
+  this.todayvalue=localStorage.getItem("totalamounts")
+  this.paymentservice.toddayamount(id,token).subscribe(res=>{
+  console.log(res)
+  this.todaypaidamount= res
+  if(res){
+    this.totals +=parseFloat (this.todaypaidamount)
+    this.totals += parseFloat(this.todayvalue.replace(/,/g,''))
+    console.log(this.totals)
+    if(this.totals<200000){
+    this.submitcash(s)
+    }
+    else{
+      console.log("max limit")
+      this.presentToast1("You have exceeded the Cash limit of ₹2 lakh/day")
+    }
+  }
+ 
+  },(error:HttpErrorResponse)=>{
+    if(error.status ===401){    
+       this.dismiss();       
+      this.presentToast("Session timeout, please login to continue.");
+      this.router.navigate(["/login"]);
+   }
+   else if(error.status ===400){    
+    this.dismiss();       
+    this.presentToast("Server Error! Please try login again.");
+    this.router.navigate(["/login"]);
+ }
+  })
+}
+
+submitcash(s) {
   this.present();
   this.sampletest = s.formArrayName;
   console.log(this.sampletest)
@@ -337,7 +380,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -369,7 +412,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -401,7 +444,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -433,7 +476,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -469,7 +512,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -501,7 +544,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -533,7 +576,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -565,7 +608,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -601,7 +644,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -633,7 +676,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -665,7 +708,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -697,7 +740,7 @@ console.log(this.sampletest[i].interest)
   "ISActive": true,
   "BranchID": this.sampletest[i].branchid,
   "ChitGroupId": this.sampletest[i].chitgroupid,
-  "Narration": this.sampletest[i].narration,
+  // "Narration": this.sampletest[i].narration,
   "Head_Id": this.sampletest[i].headid,
   "Other_Trans_Type": 1,
   "RootID": this.sampletest[i].rootid,
@@ -790,7 +833,8 @@ console.log(this.sampletest[i].interest)
   }
   
   )
-  }
+
+}
   logout() {
   this.router.navigateByUrl('login');
   localStorage.clear();
@@ -822,4 +866,10 @@ console.log(this.sampletest[i].interest)
   console.log(toast);
   });
   }
+  async presentToast1(message) {
+    this.toast.show(message, '3000', 'bottom').subscribe(
+    toast => {
+    console.log(toast);
+    });
+    }
   }

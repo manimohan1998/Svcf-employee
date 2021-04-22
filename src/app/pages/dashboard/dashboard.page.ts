@@ -37,6 +37,7 @@ ngOnInit() {
 ionViewWillEnter(){
 this.moneycoll_name=localStorage.getItem("col_name")
 this.moneycoll_id = localStorage.getItem("col_id");
+console.log(this.moneycoll_id)
 let token=localStorage.getItem("tokens");
 this.present();
 this.dashboardservice.user_details(this.moneycoll_id,token).subscribe(res => {
