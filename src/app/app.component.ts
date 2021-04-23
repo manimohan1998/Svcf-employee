@@ -25,29 +25,19 @@ export class AppComponent {
     public toastController: ToastController
 
   ) {
-         //this.initializeBackButtonCustomHandler();
-
+         this.initializeBackButtonCustomHandler();
+   
     this.initializeApp();
   }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-               this.statusBar.backgroundColorByHexString('#30ADFF');
-
-      this.splashScreen.hide();
-    });
-
-
+  initializeBackButtonCustomHandler() {
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       console.log('Back press handler!');
       if (this._location.isCurrentPathEqualTo('/cashprint')) {
-        this.router.navigateByUrl('dashboard')
-
-        // Show Exit Alert!
+       // Show Exit Alert!
         console.log('Show Exit Alert!');
         //this.showExitConfirm();
-        processNextHandler();
+        this.router.navigateByUrl('dashboard')
+        // processNextHandler();
       } else if(this._location.isCurrentPathEqualTo('/payment/cash' )) {
 
         // Navigate to back page
@@ -93,27 +83,36 @@ export class AppComponent {
         // Navigate to back page
         console.log('Navigate to back page');
         //this._location.back();
-          navigator['app'].exitApp();
-
+          // navigator['app'].exitApp();
+          this.showExitConfirm();
       }
     });
 
-    this.platform.backButton.subscribeWithPriority(5, () => {
-      if (this._location.isCurrentPathEqualTo('/cashprint')) {
-        this.router.navigateByUrl('dashboard')
-      }
-       else{
-         console.log('Handler called to force close!');
-        this.alertController.getTop().then(r => {
-          if (r) {
-            navigator['app'].exitApp();
-          }
-        }).catch(e => {
-          console.log(e);
-        })
-      }
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.initializeBackButtonCustomHandler();
+               this.statusBar.backgroundColorByHexString('#30ADFF');
+
+      this.splashScreen.hide();
+    });
+
+
+   
+    // this.platform.backButton.subscribeWithPriority(5, () => {
      
-    });
+    //      console.log('Handler called to force close!');
+    //     this.alertController.getTop().then(r => {
+    //       if (r) {
+    //         navigator['app'].exitApp();
+    //       }
+    //     }).catch(e => {
+    //       console.log(e);
+    //     })
+      
+    // });
 
   }
   showExitConfirm() {
@@ -137,6 +136,27 @@ export class AppComponent {
         alert.present();
       });
   }
+  // showExitConfirm1() {
+  //   this.alertController.create({
+  //     // header: 'Back to Dashboard page',
+  //     message: 'Back to Dashboard page',
+  //     buttons: [{
+  //       text: 'Cancel',
+  //       role: 'cancel',
+  //       handler: () => {
+  //       console.log('Cancel clicked');
+  //       }
+  //     }, {
+  //       text: 'ok',
+  //       handler: () => {
+  //        this.router.navigate(['/dashboard'])
+  //       }
+  //     }]
+  //   })
+  //     .then(alert => {
+  //       alert.present();
+  //     });
+  // }
 
 }
 

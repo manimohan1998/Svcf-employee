@@ -74,6 +74,7 @@ B_Groups: any=[];
   totals: number;
   todayvalue: any;
   userdata: any=[];
+  total1: boolean;
 constructor(private fb: FormBuilder,private toast: Toast,private http: HttpClient, public loadingController: LoadingController, private router: Router, private route: ActivatedRoute, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -98,6 +99,42 @@ this.new_array = this.new;
 })
 }
 ngOnInit() {
+  let token1=localStorage.getItem("tokens");
+  this.userdata=JSON.parse(localStorage.getItem("user2"))
+  let id=this.userdata["MemberID"]
+  
+  this.totals=0;
+  this.todayvalue=localStorage.getItem("totalamounts")
+  this.paymentservice.toddayamount(id,token1).subscribe(res=>{
+    this.todaypaidamount= res
+    console.log(this.todaypaidamount)
+if(this.todaypaidamount>-1){
+    this.totals +=parseFloat (this.todaypaidamount)
+    this.totals += parseFloat(this.todayvalue.replace(/,/g,''))
+    console.log(this.totals)
+    if(this.totals<200000){
+    this.total1=true
+    }
+    else{
+      this.total1=false
+    }
+  }
+  console.log(this.total1)
+}
+,(error:HttpErrorResponse)=>{
+  if(error.status ===401){    
+     this.dismiss();       
+    this.presentToast("Session timeout, please login to continue.");
+    this.router.navigate(["/login"]);
+ }
+ else if(error.status ===400){    
+  this.dismiss();       
+  this.presentToast("Server Error! Please try login again.");
+  this.router.navigate(["/login"]);
+}
+
+})
+
 
 
   function colName(n) {
@@ -243,40 +280,15 @@ for (let i=0;i<this.result.length;i++){
 
 
 submitfunction(s){
-  let token=localStorage.getItem("tokens");
-  this.userdata=JSON.parse(localStorage.getItem("user2"))
-  let id=this.userdata["MemberID"]
   
-  this.totals=0;
-  this.todayvalue=localStorage.getItem("totalamounts")
-  this.paymentservice.toddayamount(id,token).subscribe(res=>{
-  console.log(res)
-  this.todaypaidamount= res
-  if(res){
-    this.totals +=parseFloat (this.todaypaidamount)
-    this.totals += parseFloat(this.todayvalue.replace(/,/g,''))
-    console.log(this.totals)
-    if(this.totals<200000){
-    this.submitcash(s)
+    if(this.totals<200000 && this.total1==true){
+    this.submitcash(s);
     }
     else{
       console.log("max limit")
       this.presentToast1("You have exceeded the Cash limit of ₹2 lakh/day")
     }
-  }
- 
-  },(error:HttpErrorResponse)=>{
-    if(error.status ===401){    
-       this.dismiss();       
-      this.presentToast("Session timeout, please login to continue.");
-      this.router.navigate(["/login"]);
-   }
-   else if(error.status ===400){    
-    this.dismiss();       
-    this.presentToast("Server Error! Please try login again.");
-    this.router.navigate(["/login"]);
- }
-  })
+  
 }
 
 submitcash(s) {
@@ -769,9 +781,10 @@ console.log(this.sampletest[i].interest)
   this.presentToast('sucessfully updated');
    let navigationExtras: NavigationExtras = {
     queryParams: { state:JSON.stringify(this.voucher_res )},
-    skipLocationChange: true
+    // skipLocationChange: true
     };
-    this.router.navigate(['cashprint'],navigationExtras)
+    console.log(this.voucher_res)
+    this.router.navigate(['/cashprint'],navigationExtras)
   
   }
   else {
