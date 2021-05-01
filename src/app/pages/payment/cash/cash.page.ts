@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@ang
 import { PaymentService } from '../../../services/payment.service';
 import { AlertController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 selector: 'app-payment',
@@ -33,6 +34,11 @@ final_total:any;
 grandtotal:any;
 message:any;
 grandtotal1:any;
+  userdata: any;
+  totals: number;
+  todayvalue: any;
+  todaypaidamount: any;
+  total1: boolean;
 constructor(private route: ActivatedRoute,private toast:Toast,public alertController: AlertController, private router: Router, private fb: FormBuilder, public paymentservice: PaymentService) {
 this.route.queryParams.subscribe(params => {
 if (this.router.getCurrentNavigation().extras.state) {
@@ -166,16 +172,66 @@ if(this.grandtotal == 0){
   
 }
 else{
-  this.presentAlertConfirm(c,this.grandtotal1);
- 
-}
+  let token1=localStorage.getItem("tokens");
+  this.userdata=JSON.parse(localStorage.getItem("user2"))
+  let id=this.userdata["MemberID"]
   
+  this.totals=0;
+  this.todayvalue=this.grandtotal1
+  this.paymentservice.toddayamount(id,token1).subscribe(res=>{
+    this.todaypaidamount= res
+    console.log(this.todaypaidamount)
+if(this.todaypaidamount>-1){
+    this.totals +=parseFloat (this.todaypaidamount)
+    this.totals += parseFloat(this.todayvalue.replace(/,/g,''))
+    console.log(this.totals)
+    if(this.totals<200000){
+    this.total1=true
+    this.presentAlertConfirm(c,this.grandtotal1);
+    }
+    else{
+      this.total1=false
+      this.presentAlertConfirm2();
+    }
+  }
+  console.log(this.total1)
+}
+,(error:HttpErrorResponse)=>{
+  if(error.status ===401){    
+    this.presentToast("Session timeout, please login to continue.");
+    this.router.navigate(["/login"]);
+ }
+ else if(error.status ===400){    
+  this.presentToast("Server Error! Please try login again.");
+  this.router.navigate(["/login"]);
+}
 
-
-
-
+})
 
 }
+}
+
+async presentAlertConfirm2() {
+  const alert = await this.alertController.create({
+  message: 'You have exceeded the Cash limit of ₹2 lakh/day',
+  buttons: [
+  {
+  text: 'Cancel',
+  role: 'cancel',
+  cssClass: 'secondary',
+  handler: (blah) => {
+  }
+  }, {
+  text: 'Ok',
+  role: 'cancel',
+  handler: () => {
+  }
+  }
+  ]
+  });
+  await alert.present();
+  }
+
 previous(){
   this.router.navigateByUrl('payment')
 }
