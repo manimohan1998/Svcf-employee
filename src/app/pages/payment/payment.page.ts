@@ -34,6 +34,8 @@ arrayprized: any[]=[];
 prized_chits: any[]=[];
 imageUrl:any;
 profile:any;
+  avoid_chits: any[]=[];
+  valid_chits: any[]=[];
 constructor(private route: ActivatedRoute,public alertController: AlertController, private router: Router,public paymentservice:PaymentService,
   public toastController: ToastController) {
 
@@ -108,10 +110,18 @@ for (let i=0;i<this.payee_details.length;i++){
   
   cash(){
   this.prized_chits=[];
+  this.valid_chits=[];
+  this.avoid_chits=[];
   if(this.arrayvalue.length !=0){
   for(var i=0; i<this.newarr.length;i++){
     if(this.newarr[i].isprized=='Prized')  this.prized_chits.push(this.newarr[i])
     }
+    for(var i=0; i<this.prized_chits.length;i++){
+      if(this.prized_chits[i].PrizedArrear=="0.00" && this.prized_chits[i].NonPrizedArrear=="0.00" && this.prized_chits[i].CurrentDueAmount=="0.00")  this.avoid_chits.push(this.prized_chits[i])
+      if(this.prized_chits[i].PrizedArrear !=="0.00" || this.prized_chits[i].NonPrizedArrear!=="0.00" || this.prized_chits[i].CurrentDueAmount!=="0.00")  this.valid_chits.push(this.prized_chits[i])
+   }
+   console.log(this.avoid_chits,"avoid")
+   console.log(this.valid_chits,"valid")
     if(this.prized_chits.length!=0){
     
     if(this.arrayvalue.length <=1){
@@ -123,14 +133,23 @@ for (let i=0;i<this.payee_details.length;i++){
     skipLocationChange: true
     };
     this.router.navigate(['payment/cash'],navigationExtras)
-    }else return this.presentToast("Must choose atleast 1 Prized Chit");
+    }
+    else if(this.arrayvalue[0].isprized=='Non-Prized' && this.valid_chits.length==0 && this.avoid_chits.length !=0){
+      let data = JSON.stringify(this.arrayvalue)
+    let navigationExtras: NavigationExtras = {
+    queryParams: { state:data },
+    skipLocationChange: true
+    };
+    this.router.navigate(['payment/cash'],navigationExtras)
+    }
+    else return this.presentToast("Must choose atleast 1 Prized Chit");
     }else if(this.arrayvalue.length ==2){
     for(let i=0;i<this.arrayvalue.length;i++){
       if(this.arrayvalue[i].isprized=="Prized"){
       this.arrayprized.push(this.arrayvalue[i])
       }
       }
-      if(this.arrayprized.length==0) return this.presentToast("Choose atleast 1 prized chits")
+      if(this.arrayprized.length==0 && this.valid_chits.length>=1) return this.presentToast("Choose atleast 1 prized chits")
       else{
       let data = JSON.stringify(this.arrayvalue)
       let navigationExtras: NavigationExtras = {
@@ -153,7 +172,7 @@ for (let i=0;i<this.payee_details.length;i++){
         this.arrayprized.push(this.arrayvalue[i])
         }
         }
-        if(this.arrayprized.length <2){
+        if(this.arrayprized.length <2 && this.valid_chits.length>=2){
         return this.presentToast("Choose atleast 2 prized chits")
         }else{
         let data = JSON.stringify(this.arrayvalue)
