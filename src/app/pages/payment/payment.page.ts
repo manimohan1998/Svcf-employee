@@ -172,7 +172,7 @@ for (let i=0;i<this.payee_details.length;i++){
         this.arrayprized.push(this.arrayvalue[i])
         }
         }
-        if(this.arrayprized.length <2 && this.valid_chits.length>=2){
+        if(this.arrayprized.length <2 && this.valid_chits.length >=2){
         return this.presentToast("Choose atleast 2 prized chits")
         }else{
         let data = JSON.stringify(this.arrayvalue)
