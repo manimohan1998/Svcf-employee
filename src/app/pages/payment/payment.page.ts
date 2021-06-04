@@ -117,8 +117,8 @@ for (let i=0;i<this.payee_details.length;i++){
     if(this.newarr[i].isprized=='Prized')  this.prized_chits.push(this.newarr[i])
     }
     for(var i=0; i<this.prized_chits.length;i++){
-      if(this.prized_chits[i].PrizedArrear=="0.00" && this.prized_chits[i].NonPrizedArrear=="0.00" && this.prized_chits[i].CurrentDueAmount=="0.00")  this.avoid_chits.push(this.prized_chits[i])
-      if(this.prized_chits[i].PrizedArrear !=="0.00" || this.prized_chits[i].NonPrizedArrear!=="0.00" || this.prized_chits[i].CurrentDueAmount!=="0.00")  this.valid_chits.push(this.prized_chits[i])
+      if(this.prized_chits[i].PrizedArrear=="0.00" && this.prized_chits[i].NonPrizedArrear=="0.00" )  this.avoid_chits.push(this.prized_chits[i])
+      if(this.prized_chits[i].PrizedArrear !=="0.00" || this.prized_chits[i].NonPrizedArrear!=="0.00")  this.valid_chits.push(this.prized_chits[i])
    }
    console.log(this.avoid_chits,"avoid")
    console.log(this.valid_chits,"valid")

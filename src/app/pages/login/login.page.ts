@@ -22,15 +22,17 @@ coll_id: any;
 coll_name: any;
 passwordType: string = 'password';
 passwordIcon: string = 'eye-off';
-constructor(private platform:Platform,private fb: FormBuilder, public loadingController: LoadingController, private router: Router, private toast: Toast, public loginservice: LoginService) { }
+constructor(private platform:Platform,private fb: FormBuilder, public loadingController: LoadingController, private router: Router, private toast: Toast, public loginservice: LoginService) {
+  this.loginForm = this.fb.group({
+    username: new FormControl('', Validators.compose([
+    Validators.required
+    ])),
+    password: new FormControl('', Validators.compose([
+    Validators.required,]))
+    });
+ }
 ngOnInit() {
-this.loginForm = this.fb.group({
-username: new FormControl('', Validators.compose([
-Validators.required
-])),
-password: new FormControl('', Validators.compose([
-Validators.required,]))
-});
+
 }
  
 
@@ -119,5 +121,8 @@ if(event.which ==32)
 event.preventDefault();
 return false;
 }
+}
+ionViewWillLeave(){
+  this.loginForm.reset();
 }
 }
