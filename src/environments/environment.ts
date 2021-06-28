@@ -6,7 +6,7 @@ export const environment = {
   production: false,
     //Baseurl: 'http://192.168.0.48:8080/SVCF_WCF/Service1.svc/',
     Baseurl:'https://emp.sreevisalam.com/SVCF_Service/Service1.svc/',
-    Imageurl:'https://emp.sreevisalam.com'
+    Imageurl:'http://3.7.244.11'
 
 
 };
