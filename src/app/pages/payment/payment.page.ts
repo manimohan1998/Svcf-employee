@@ -36,6 +36,7 @@ imageUrl:any;
 profile:any;
   avoid_chits: any[]=[];
   valid_chits: any[]=[];
+  blocked: any[]=[];
 constructor(private route: ActivatedRoute,public alertController: AlertController, private router: Router,public paymentservice:PaymentService,
   public toastController: ToastController) {
 
@@ -49,6 +50,7 @@ this.user_details=JSON.parse(localStorage.getItem("user2"));
 let token=localStorage.getItem("tokens");
 this.paymentservice.payment_details(this.user_details.MemberID,token).subscribe(res =>{
 this.payee_details=res;
+console.log(this.payee_details)
 for (let i=0;i<this.payee_details.length;i++){
   this.status=this.payee_details[i].status;
   this.arrear=this.payee_details[i].arrearamount;
@@ -112,9 +114,13 @@ for (let i=0;i<this.payee_details.length;i++){
   this.prized_chits=[];
   this.valid_chits=[];
   this.avoid_chits=[];
+  this.blocked=[];
   if(this.arrayvalue.length !=0){
   for(var i=0; i<this.newarr.length;i++){
     if(this.newarr[i].isprized=='Prized')  this.prized_chits.push(this.newarr[i])
+    }
+    if(this.newarr[i]?.IsBlocked == 1){
+      this.blocked.push(this.newarr[i])
     }
     for(var i=0; i<this.prized_chits.length;i++){
       if(this.prized_chits[i].PrizedArrear=="0.00" && this.prized_chits[i].NonPrizedArrear=="0.00" )  this.avoid_chits.push(this.prized_chits[i])
@@ -122,7 +128,7 @@ for (let i=0;i<this.payee_details.length;i++){
    }
    console.log(this.avoid_chits,"avoid")
    console.log(this.valid_chits,"valid")
-    if(this.prized_chits.length!=0){
+    if(this.prized_chits.length!=0 && this.blocked.length==0){
     
     if(this.arrayvalue.length <=1){
     
@@ -174,7 +180,8 @@ for (let i=0;i<this.payee_details.length;i++){
         }
         if(this.arrayprized.length <2 && this.valid_chits.length >=2){
         return this.presentToast("Choose atleast 2 prized chits")
-        }else{
+        }
+        else{
         let data = JSON.stringify(this.arrayvalue)
         let navigationExtras: NavigationExtras = {
         queryParams: { state:data },
@@ -184,7 +191,11 @@ for (let i=0;i<this.payee_details.length;i++){
         }
         }
         }
-        }else{
+        }
+        else if(this.blocked.length!=0){
+this.presentToast("This Chit Number is blocked,Contact admin")
+        }
+          else{
         let data = JSON.stringify(this.arrayvalue)
         let navigationExtras: NavigationExtras = {
         queryParams: { state:data },
